@@ -1,2 +1,4 @@
-# Catering-System_UnifiedMentor
-A Catering System with multiple features and functionalities usable by Admin and Users
+git link ==> https://github.com/Devvora08/Catering-System_UnifiedMentor.git
+
+Description :
+*Catering Craft* is a MERN stack-based catering system that offers a wide selection of 150 food items, categorized into appetizers, soups, main courses, side dishes, and desserts. It supports event-based catering, recurring tiffin services, and customizable thali options. Users can filter items, make special requests, and meet minimum order requirements. The system includes admin order approval and SMS-based recommendations, ensuring a seamless and personalized catering experience for various group sizes.
