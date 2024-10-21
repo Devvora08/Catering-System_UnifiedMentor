@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order | Cart</title>
+</head>
+<body>
+    <h1><%= category %> Menu</h1>
+    <ul>
+        <% foodItems.forEach(item => { %>
+            <li>
+                <h3><%= item.name %></h3>
+                <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
+                <p><%= item.description %></p>
+                <p>Price: <%= item.price %> Rs</p>
+                
+                <form action="/user/order" method="POST" style="display: inline;">
+                    <div style="display: flex; align-items: center;">
+                        <button type="button" onclick="decrementQuantity('<%= item._id %>')">-</button>
+                        <input type="number" id="quantity-<%= item._id %>" name="quantity" value="0" min="0" style="width: 40px; text-align: center;" readonly>
+                        <button type="button" onclick="incrementQuantity('<%= item._id %>')">+</button>
+                    </div>
+                    <input type="hidden" name="itemId" value="<%= item._id %>">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+
+<div>
+    <a href="/user/order?category=Appetizer">Appetizer</a>
+    <a href="/user/order?category=Soup">Soup</a>
+    <a href="/user/order?category=Main Course">Main Course</a>
+    <a href="/user/order?category=Side Dish">Side Dish</a>
+    <a href="/user/order?category=Dessert">Dessert</a>
+    <a href="/user/cart">Go to Cart</a>
+</div>
+
+<script>
+    function incrementQuantity(itemId) {
+        const quantityInput = document.getElementById(`quantity-${itemId}`);
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    }
+
+    function decrementQuantity(itemId) {
+        const quantityInput = document.getElementById(`quantity-${itemId}`);
+        if (parseInt(quantityInput.value) > 0) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+    }
+</script>
+</body>
+</html>

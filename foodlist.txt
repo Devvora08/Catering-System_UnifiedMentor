@@ -1,0 +1,186 @@
+Here is the final draft of your food items, categorized into the 5 main groups with the Jain/non-Jain classification, and further classified into Chinese, Punjabi, Gujarati, and South Indian within the Indian main course:
+
+---
+
+### **Appetizers/Starters (25)**
+1. **Paneer Tikka** (Punjabi, Jain)
+2. **Hara Bhara Kabab** (Punjabi, Non-Jain)
+3. **Dhokla** (Gujarati, Jain)
+4. **Aloo Tikki Chaat** (Punjabi, Non-Jain)
+5. **Veg Spring Rolls** (Chinese, Non-Jain)
+6. **Veg Manchurian Balls** (Chinese, Non-Jain)
+7. **Samosa** (Punjabi, Jain)
+8. **Pani Puri** (Gujarati, Non-Jain)
+9. **Dahi Puri** (Gujarati, Non-Jain)
+10. **Chilli Paneer** (Chinese, Non-Jain)
+11. **Corn Cheese Balls** (Non-Jain)
+12. **Cheese Chilli Toast** (Non-Jain)
+13. **Veg Seekh Kebab** (Non-Jain)
+14. **Stuffed Paneer Pakora** (Punjabi, Non-Jain)
+15. **Veg Hakka Noodles** (Chinese, Jain)
+16. **Crispy Corn** (Non-Jain)
+17. **Chole Bhature (Mini)** (Punjabi, Jain)
+18. **Veg Shammi Kebab** (Non-Jain)
+19. **Khandvi** (Gujarati, Jain)
+20. **Masala Papad** (Jain)
+21. **Rajma Galouti Kebab** (Punjabi, Non-Jain)
+22. **Spinach and Cheese Croquettes** (Non-Jain)
+23. **Tandoori Mushroom** (Punjabi, Jain)
+24. **Veg Cheese Garlic Bread** (Non-Jain)
+25. **Jalapeno Poppers** (Non-Jain)
+
+---
+
+### **Soups (10)**
+1. **Tomato Soup** (Jain)
+2. **Sweet Corn Soup** (Non-Jain)
+3. **Manchow Soup** (Non-Jain)
+4. **Hot and Sour Soup** (Non-Jain)
+5. **Lemon Coriander Soup** (Jain)
+6. **Broccoli and Almond Soup** (Non-Jain)
+7. **Cream of Mushroom Soup** (Non-Jain)
+8. **Clear Veg Soup** (Jain)
+9. **Thai Veg Soup** (Non-Jain)
+10. **Mixed Vegetable Soup** (Non-Jain)
+
+---
+
+### **Main Course - Indian (49)**
+#### **Punjabi (12)**
+1. **Paneer Butter Masala** (Non-Jain)
+2. **Chole Masala** (Jain)
+3. **Dal Makhani** (Non-Jain)
+4. **Rajma Curry** (Jain)
+5. **Kadhai Paneer** (Non-Jain)
+6. **Shahi Paneer** (Non-Jain)
+7. **Pindi Chole** (Non-Jain)
+8. **Veg Biryani** (Non-Jain)
+9. **Dum Aloo** (Non-Jain)
+10. **Dal Tadka** (Non-Jain)
+11. **Paneer Lababdar** (Non-Jain)
+12. **dum biryani** (Non-Jain)
+
+#### **Gujarati (12)**
+1. **Undhiyu** (Non-Jain)
+2. **Dal Dhokli** (Jain)
+3. **Sev Tameta** (Non-Jain)
+4. **Gujarati Kadhi** (Jain)
+5. **Aloo Methi** (Jain)
+6. **Gatte Ki Sabzi** (Jain)
+7. **Dhokli Nu Shaak** (Jain)
+8. **Thepla** (Jain)
+9. **bhakharwadi** (Jain)
+10. **Baingan Bharta** (Jain)
+11. **Patra** (Jain)
+12. **Handvo** (Jain)
+
+#### **Chinese (12)**
+1. **Veg Manchurian gravy** (Non-Jain)
+2. **singapore Noodles** (Non-Jain)
+3. **Veg Fried Rice** (Non-Jain)
+4. **Schezwan Rice** (Jain)
+5. **Schezwan Noodles** (Non-Jain)
+6. **Veg Chilli Garlic rice** (Non-Jain)
+7. **Crispy Veg in Hot Garlic Sauce** (Non-Jain)
+8. **Veg Chowmein** (Non-Jain)
+9. **Chilli Paneer Gravy** (Non-Jain)
+10. **Honey Chilli Potato** (Non-Jain)
+11. **american chop suey** (Non-Jain)
+12. **tofu curry** (Non-Jain)
+
+#### **South Indian (13)**
+1. **Idli Sambhar** (Jain)
+2. **plain Dosa** (Jain)
+3. **Mysore Masala Dosa** (Non-Jain)
+4. **Pesarattu** (Jain)
+5. **Uttapam** (Jain)
+6. **Veg Vindaloo** (Non-Jain)
+7. **Veg Malvani Curry** (Non-Jain)
+8. **Sambar** (Jain)
+9. **Rasam** (Jain)
+10. **Veg Paniyaram** (Jain)
+11. **Avial** (Jain)
+12. **Kootu curry** (non-Jain)
+13. **Coconut Rice** (Jain)
+
+---
+
+### **Main Course - Continental (21)**
+1. **Veg Lasagna** (Non-Jain)
+2. **Mushroom Risotto** (Non-Jain)
+3. **Margherita Pizza** (Non-Jain)
+4. **Cannelloni** (Non-Jain)
+5. **Veg Stroganoff** (Non-Jain)
+6. **Penne Arrabbiata Pasta** (Non-Jain)
+7. **Grilled Veggies with Herbs** (Jain)
+8. **Veggie Burger** (Non-Jain)
+9. **Mushroom and Cheese Pizza** (Non-Jain)
+10. **Spinach Ricotta Pizza** (Non-Jain)
+11. **Spaghetti Aglio e Olio** (Non-Jain)
+12. **Ratatouille** (Non-Jain)
+13. **Veggie Quesadilla** (Non-Jain)
+14. **Veg Enchiladas** (Non-Jain)
+15. **Mexican Rice** (Jain)
+16. **Stuffed Bell Peppers** (Jain)
+17. **Veggie Fajitas** (Non-Jain)
+18. **stuffed Garlic Bread** (Non-Jain)
+19. **Veggie Stir-Fry** (Jain)
+20. **Veg Alfredo Pasta** (Non-Jain)
+21. **Zucchini Pasta** (Jain)
+
+---
+
+### **Side Dishes (30)**
+1. **Raita** (Jain)
+2. **Roomali roti** (Jain)
+3. **Boondi Raita** (Jain)
+4. **Tandoori Roti** (Jain)
+5. **Butter Naan** (Jain)
+6. **Garlic Naan** (Non-Jain)
+7. **Lachha Paratha** (Non-Jain)
+8. **Missi Roti** (Jain)
+9. **Pulao** (Jain)
+10. **Rice** (Jain)
+11. **saffron Rice** (Jain)
+12. **Jeera Rice** (Jain)
+13. **Lemon Rice** (Jain)
+14. **Pudina Raita** (Jain)
+15. **Stuffed Naan** (Non-Jain)
+16. **Cheese Naan** (Non-Jain)
+17. **black daal** (Non-Jain)
+18. **kashmiri Roti** (Non-Jain)
+19. **Stuffed Kulcha** (Non-Jain)
+20. **Tandoori Paratha** (Jain)
+21. **Plain Paratha** (Jain)
+22. **Aloo Paratha** (non-Jain)
+23. **Bhakri** (Jain)
+24. **Daal Baati** (Jain)
+25. **churma** (Jain)
+26. **khichya** (Jain)
+27. **achar** (Non-Jain)
+28. **mexican naan** (non-Jain)
+29. **Paneer Paratha** (Non-Jain)
+30. **Kachumber Salad** (non-Jain)
+
+---
+
+### **Desserts (15)**
+1. **Gulab Jamun** (Jain)
+2. **Rasmalai** (Jain)
+3. **Kesar Pista Kulfi** (Jain)
+4. **Moong Dal Halwa** (Jain)
+5. **Gajar Ka Halwa** (Non-Jain)
+6. **Jalebi** (Jain)
+7. **Shrikhand** (Jain)
+8. **Rabri** (Jain)
+9. **Chocolate Brownie** (Non-Jain)
+10. **Malpua** (Jain)
+11. **Fruit Salad** (Jain)
+12. **Caramel Custard** (Non-Jain)
+13. **Rasgulla** (Jain)
+14. **Sizzling Brownie** (Non-Jain)
+15. **Chocolate Mousse** (Non-Jain)
+
+---
+
+This final list organizes your 150 vegetarian items based on the main categories, Jain/non-Jain distinction, and provides clear classification for Indian dishes into Punjabi, Gujarati, Chinese, and South Indian cuisines.
