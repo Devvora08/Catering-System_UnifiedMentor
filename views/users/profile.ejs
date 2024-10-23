@@ -3,9 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | User</title>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Include your CSS file -->
 </head>
 <body>
-    <h1>display user profile here</h1>
+    <div class="container">
+        <h1>User Profile</h1>
+        
+        <!-- User Information -->
+        <div class="profile-info">
+            <h2>Profile Information</h2>
+            <p><strong>Name:</strong> <%= user.name %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Phone:</strong> <%= user.phone %></p>
+            <img src="<%= user.profilePicture || '/default-profile.png' %>" alt="Profile Picture" style="width:100px;height:100px;">
+        </div>
+        
+        <!-- Order History -->
+        <div class="order-history">
+            <h2>Order History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total Amount</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% user.orderHistory.forEach(order => { %>
+                        <tr>
+                            <td><%= order._id %></td>
+                            <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
+                            <td><%= order.status %></td>
+                            <td><%= order.totalBill %> currency units</td>
+                            <td><a href="/user/order/<%= order._id %>">View Details</a></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Address Information -->
+        <div class="address-info">
+            <h2>Saved Addresses</h2>
+            <ul>
+                <% user.address.forEach(address => { %>
+                    <li><%= address %> <a href="/user/address/edit/<%= address._id %>">Edit</a></li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <!-- Account Settings -->
+        <div class="account-settings">
+            <h2>Account Settings</h2>
+            <a href="/user/settings">Update Password/Settings</a>
+        </div>
+
+        <!-- Logout Button -->
+        <div>
+            <a href="/">Logout</a>
+        </div>
+    </div>
 </body>
 </html>

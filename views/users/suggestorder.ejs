@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggest Your Order</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Suggest Your Order</h1>
+        <form action="/user/suggestOrder" method="POST"> 
+            <div class="form-group">
+                <label for="cuisineType">Cuisine Type:</label>
+                <select id="cuisineType" name="cuisineType" required>
+                    <option value="Punjabi">Punjabi</option>
+                    <option value="Gujarati">Gujarati</option>
+                    <option value="South Indian">South Indian</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Continental">Continental</option>
+                    <option value="Indian">Indian</option> <!-- Added Indian option -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="isJain">Jain / Non-Jain:</label>
+                <select id="isJain" name="isJain" required>
+                    <option value="true">Jain</option>
+                    <option value="false">Non-Jain</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="specialPreferences">Special Preferences:</label>
+                <textarea id="specialPreferences" name="specialPreferences" rows="4" placeholder="Enter any special preferences..."></textarea>
+            </div>
+            <button type="submit">Submit Order Suggestion</button>
+        </form>
+        <p id="confirmationMessage"></p>
+    </div>
+    
+
+    <% if (info_msg.length > 0) { %>
+        <div class="alert alert-info">
+            <%= info_msg %>
+        </div>
+        <a href="/user/home" class="btn btn-primary">Go to Home</a> <!-- Button to redirect -->
+    <% } %>
+    <script>
+        // JavaScript to set the hidden special preferences value if the textarea is empty
+        const specialPreferencesTextarea = document.getElementById('specialPreferences');
+        const hiddenSpecialPreferences = document.getElementById('hiddenSpecialPreferences');
+
+        specialPreferencesTextarea.addEventListener('input', function() {
+            hiddenSpecialPreferences.value = specialPreferencesTextarea.value.trim() === '' ? 'none' : specialPreferencesTextarea.value;
+        });
+    </script>
+</body>
+</html>

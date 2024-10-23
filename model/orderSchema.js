@@ -26,10 +26,7 @@ const orderSchema = new mongoose.Schema({
     type: [String],  
     required: true,
   },
-  specialInstructions: {
-    type: String,
-    default: 'None',
-  },
+  specialInstructions: { type: String, required: false, default: 'none' },
   status: {
     type: String,
     enum: ['pending', 'confirmed', 'preparing', 'delivered', 'cancelled'],
