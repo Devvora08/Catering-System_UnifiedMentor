@@ -1,6 +1,8 @@
 const FoodItem = require('../model/foodItemsSchema');
 const User = require('../model/userSchema');
 const Order = require("../model/orderSchema");
+const Thali = require("../model/thaliSchema");
+const ThaliOrder = require("../model/thaliOrderSchema");
 const mongoose = require('mongoose'); // Make sure you have this at the top of your file
 
 const jwt = require('jsonwebtoken');
@@ -220,18 +222,12 @@ async function giveOrder(req,res){
 
     try {
         await newOrder.save(); // Save the order to the database
-        res.status(201).json({
-            message: 'Order created successfully',
-            order: newOrder
-        });
+         req.flash('info',` Our team member ${teamMember.name} will send you an order recommendation.Check Homepage soon `);
+         res.redirect('/user/suggestorder');
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to create order', error });
     }
-
-    // req.flash('info',` Our team member ${teamMember.name} will send you an order recommendation.Check Homepage soon `);
-    // //res.redirect('/user/suggestorder');
-    // res.json(suggestedMenu);
 }
 
 async function getProfile(req, res) {
@@ -248,6 +244,21 @@ async function getProfile(req, res) {
         console.error(err);
         res.status(500).send('Server error');
     }
+}
+
+async function postProfile(req,res){
+    const tiffinSubscriber = req.body.tiffinSubscriber === 'true';
+    //console.log(tiffinSubscriber);
+    const userId = req.user._id; 
+    //console.log(userId)
+    User.findByIdAndUpdate(userId, { isTiffinSubscriber: tiffinSubscriber })
+        .then(() => {
+            res.redirect('/user/profile'); // Redirect to the profile page or wherever you want
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send("Error updating subscription.");
+        });
 }
 
 async function getCart(req, res) {
@@ -373,4 +384,139 @@ async function getOrderHistory(req, res) {
     }
 }
 
-module.exports = { getHome,displayCategory,categoryCart,suggestOrder,giveOrder, getOrder, postOrder, getProfile, getOrderHistory, handleCheckout, getCart, updateCartItem };
+async function getThali(req, res) {
+    try {
+        // Fetch all thalis and populate the food item details
+        const thalis = await Thali.find().populate('items.foodItemId'); // Adjust 'items.foodItemId' based on your schema
+        res.render("users/orderThali", { thalis });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching thali data');
+    }
+}
+
+async function postThaliOrder(req, res) {
+    try {
+        const userId = req.user._id;  // Get user ID from the request
+
+        // Iterate over each quantity input in the form
+        for (const key in req.body) {
+            if (key.startsWith("quantity-")) {
+                const thaliId = key.split("-")[1];
+                const quantity = parseInt(req.body[key]);
+
+                // Check if quantity meets minimum requirements
+                const isTiffin = req.body.isTiffin === 'true';
+                const minQuantity = isTiffin ? 50 : 20;
+
+                if (quantity >= minQuantity) {
+                    // Retrieve the thali to get its totalPrice
+                    const thali = await Thali.findById(thaliId);
+                    if (!thali) {
+                        console.error(`Thali with ID ${thaliId} not found.`);
+                        continue;  // Skip to the next item if the thali isn't found
+                    }
+
+                    // Calculate the total cost for the selected quantity of this thali
+                    const total = thali.totalPrice * quantity;
+
+                    // Create a new ThaliOrder with the calculated total
+                    await ThaliOrder.create({
+                        quantity,
+                        thaliId,
+                        userId,
+                        isTiffin,
+                        duration: isTiffin ? req.body.duration : null,
+                        total,  // Add the calculated total
+                    });
+                }
+            }
+        }
+
+        // Redirect back to the thali order page
+        res.redirect("/user/thali/history");
+
+    } catch (error) {
+        console.error("Error creating ThaliOrder:", error);
+        res.status(500).send("Server Error");
+    }
+}
+
+async function getThaliHistory(req, res) {
+    try {
+        const userId = req.user._id;  // assuming `req.user` contains the authenticated user's data
+        const thaliOrders = await ThaliOrder.find({ userId }).populate('thaliId');
+        const user = await User.findById(userId);  // Fetch user details
+
+        res.render("users/thaliHistory", { thaliOrders, user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error retrieving thali order history.");
+    }
+}
+
+
+async function getTiffin(req, res) {
+    try {
+        const userId = req.user._id;  // assuming `req.user` contains the authenticated user's data
+        const user = await User.findById(userId);
+
+        if (!user.isTiffinSubscriber) {
+            // Render a message prompting the user to enable tiffin subscription
+            return res.render("users/orderTiffin", { isTiffinSubscriber: false });
+        }
+
+        const thalis = await Thali.find(); // Fetch all thalis to display for subscribers
+        res.render("users/orderTiffin", { thalis, isTiffinSubscriber: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error retrieving tiffin order page.");
+    }
+}
+
+async function orderTiffin(req, res) {
+    const thaliOrders = [];
+
+    try {
+        // Loop through each thaliId provided in the request
+        const thaliIds = req.body.thaliId; // Array of thali IDs
+        for (const thaliId of thaliIds) {
+            // Get the quantity and duration for this thali
+            const quantity = req.body[`quantity-${thaliId}`];
+            const duration = req.body[`duration-${thaliId}`];
+            
+            // Only process if both quantity and duration are provided and are valid
+            if (quantity && duration && quantity >= 50 && duration > 5) {
+                // Find the thali to get its totalPrice
+                const thali = await Thali.findById(thaliId).select('totalPrice');
+
+                if (thali) {
+                    const totalPrice = thali.totalPrice;
+                    const total = parseInt(quantity) * totalPrice;
+
+                    // Push the order details into the array
+                    thaliOrders.push({
+                        quantity: parseInt(quantity),
+                        thaliId: thaliId,
+                        userId: req.user._id, // Assuming user ID is available in req.user
+                        duration: parseInt(duration),
+                        isTiffin: true, // Indicate that this is a tiffin order
+                        total: total // Calculate total as quantity * totalPrice
+                    });
+                }
+            }
+        }
+
+        // Only save orders if there are valid entries
+        if (thaliOrders.length > 0) {
+            await ThaliOrder.insertMany(thaliOrders);
+        }
+
+        res.redirect('/user/thali/history'); // Redirect to history page after successful order
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error placing tiffin order');
+    }
+}
+
+module.exports = { getHome,getThali,orderTiffin,getThaliHistory,postThaliOrder,getTiffin,displayCategory,categoryCart,suggestOrder,giveOrder, getOrder, postOrder, getProfile,postProfile, getOrderHistory, handleCheckout, getCart, updateCartItem };

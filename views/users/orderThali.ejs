@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Thali</title>
+</head>
+<body>
+    <h1>Order Thali</h1>
+
+    <form action="/user/thali/order" method="POST">
+        <% thalis.forEach(thali => { %>
+            <div class="thali-item">
+                <h2><%= thali.name %></h2>
+                <img src="<%= thali.imageUrl %>" alt="<%= thali.name %>">
+                <p><%= thali.description %></p>
+                <p>Price: ₹<%= thali.totalPrice %></p>
+    
+                <!-- Display the list of items in the thali -->
+                <h3>Items in this Thali:</h3>
+                <ul>
+                    <% thali.items.forEach(item => { %>
+                        <li>
+                            <strong><%= item.foodItemId.name %></strong>: 
+                            Quantity: <%= item.quantity %>, Price: ₹<%= item.price/10 %>
+                        </li>
+                    <% }) %>
+                </ul>
+    
+                <div class="quantity-control">
+                    <button type="button" class="decrement" onclick="decrementQuantity('<%= thali._id %>')">-</button>
+                    <input type="number" name="quantity-<%= thali._id %>" id="quantity-<%= thali._id %>" value="1" min="1" required>
+                    <button type="button" class="increment" onclick="incrementQuantity('<%= thali._id %>')">+</button>
+                </div>
+    
+                <button type="submit" name="thaliId" value="<%= thali._id %>">Add</button>
+            </div>
+        <% }) %>
+    </form>
+    
+
+    <script>
+        function decrementQuantity(thaliId) {
+            const quantityInput = document.getElementById(`quantity-${thaliId}`);
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantityInput.value = quantity - 1;
+            }
+        }
+
+        function incrementQuantity(thaliId) {
+            const quantityInput = document.getElementById(`quantity-${thaliId}`);
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+    </script>
+</body>
+</html>

@@ -61,6 +61,67 @@ app.use('/admin',restrictToLoggedInOnly,restrictTo(["admin"]),adminRoutes);
 app.use('/team',restrictToLoggedInOnly,restrictTo(["team"]),teamRoutes);
 
 
+const Thali = require('./model/thaliSchema');
+async function insertGujaratJainThali() {
+    const gujaratiJainThali = {
+      name: "Gujarati Jain Thali",
+      isJain: true,
+      items: [
+        {
+          foodItemId: "6713566584ad46030eb97426", // Dhokla
+          quantity: 1,
+          price: 250
+        },
+        {
+          foodItemId: "6713566584ad46030eb97427", // Khandvi
+          quantity: 1,
+          price: 500
+        },
+        {
+          foodItemId: "6713566584ad46030eb97428", // Masala Papad
+          quantity: 1,
+          price: 300
+        },
+        {
+          foodItemId: "671397d28b591aca420bcee4", // Aloo Methi
+          quantity: 1,
+          price: 200
+        },
+        {
+          foodItemId: "671397d28b591aca420bcee5", // Baingan Bharta
+          quantity: 1,
+          price: 250
+        },
+        {
+          foodItemId: "671397d28b591aca420bcee7", // Dal Dhokli
+          quantity: 1,
+          price: 250
+        },
+        {
+          foodItemId: "671397d28b591aca420bceeb", // Kadhi
+          quantity: 1,
+          price: 500
+        },
+        {
+          foodItemId: "6713ac039dbb884f4d05b201", // Gajar Halwa
+          quantity: 1,
+          price: 300
+        }
+      ],
+      category:"Gujarati",
+      totalPrice: 2550, // Sum of all item prices
+      minPrice: 1500 // Example minimum price condition
+    };
+  
+    try {
+      const newThali = new Thali(gujaratiJainThali);
+      await newThali.save();
+      //console.log("Gujarati Jain Thali inserted successfully:", newThali);
+    } catch (error) {
+      console.error("Error inserting Gujarati Jain Thali:", error);
+    }
+  }
+  //insertGujaratJainThali()
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

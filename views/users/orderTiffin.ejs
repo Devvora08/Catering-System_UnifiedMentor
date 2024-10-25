@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Tiffin</title>
+</head>
+<body>
+    <h1>Order Tiffin</h1>
+
+    <% if (!isTiffinSubscriber) { %>
+        <!-- Message if not a tiffin subscriber -->
+        <div style="color: red; font-weight: bold; padding: 10px;">
+            You need to be a Tiffin Subscriber to place a tiffin order.
+            <a href="/user/profile">Go to Personal Details</a> to enable Tiffin Subscription.
+        </div>
+    <% } else { %>
+        <!-- Display tiffin options for subscribers -->
+        <form action="/user/tiffin/order" method="POST">
+            <% thalis.forEach(thali => { %>
+                <div class="thali-item">
+                    <h3><%= thali.name %></h3>
+                    <p>Total Price: <%= thali.totalPrice %></p>
+                    
+                    <button type="button" onclick="decrement('<%= thali._id %>')">-</button>
+                    <input type="number" name="quantity-<%= thali._id %>" id="quantity-<%= thali._id %>" value="50" min="50">
+                    <button type="button" onclick="increment('<%= thali._id %>')">+</button>
+        
+                    <button type="button" onclick="decrementDuration('<%= thali._id %>')">-</button>
+                    <input type="number" name="duration-<%= thali._id %>" id="duration-<%= thali._id %>" value="1" min="1">
+                    <button type="button" onclick="incrementDuration('<%= thali._id %>')">+</button>
+                    
+                    <input type="hidden" name="thaliId" value="<%= thali._id %>"> <!-- Hidden field for thaliId -->
+                </div>
+            <% }) %>
+        
+            <button type="submit">Add Tiffin Order</button>
+        </form>
+        
+    <% } %>
+
+    <button onclick="window.location.href='/user/home'">Go to Home</button>
+
+    <script>
+        function incrementQuantity(id) {
+            const quantityInput = document.getElementById(`quantity-${id}`);
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+    
+        function decrementQuantity(id) {
+            const quantityInput = document.getElementById(`quantity-${id}`);
+            if (quantityInput.value > 50) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+    
+        function incrementDuration(id) {
+            const durationInput = document.getElementById(`duration-${id}`);
+            durationInput.value = parseInt(durationInput.value) + 1;
+        }
+    
+        function decrementDuration(id) {
+            const durationInput = document.getElementById(`duration-${id}`);
+            if (durationInput.value > 1) { // Ensure minimum duration is 1
+                durationInput.value = parseInt(durationInput.value) - 1;
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thali Order History</title>
+</head>
+<body>
+    <h1>Thali Order History</h1>
+
+    <!-- Display user details -->
+    <section>
+        <h2>User Details</h2>
+        <p><strong>Name:</strong> <%= user.name %></p>
+        <p><strong>Contact:</strong> <%= user.phone %></p>
+        <p><strong>Address:</strong> <%= user.address %></p>
+    </section>
+
+    <hr>
+
+    <!-- Display order history -->
+    <% if (thaliOrders.length > 0) { %>
+        <ul>
+            <% thaliOrders.forEach(order => { %>
+                <li>
+                    <h3><%= order.thaliId.name %></h3>
+                    <p>Quantity: <%= order.quantity %></p>
+                    <p>Total Price: Rs. <%= order.total %></p>
+                    <p>Order Date: <%= order.createdAt.toLocaleDateString() %></p>
+                    <p>Order Type: <%= order.isTiffin ? 'Tiffin' : 'Regular Thali' %></p>
+                </li>
+                <hr>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No thali orders found.</p>
+    <% } %>
+
+    <button onclick="window.location.href='/user/home'">Go to Home</button>
+</body>
+</html>
