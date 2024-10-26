@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thali Orders Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .order-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        .order-header, .order-items, .order-summary {
+            margin-bottom: 10px;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        .order-id, .order-user {
+            font-weight: bold;
+        }
+        .item-list {
+            list-style: none;
+            padding: 0;
+        }
+        .item-list li {
+            margin-bottom: 5px;
+        }
+        .delete-button {
+            color: red;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thali Orders Management</h1>
+
+    <h2>Thali Orders (No Tiffin Subscription)</h2>
+    <% if (thaliOrdersWithoutTiffin.length === 0) { %>
+        <p>No thali orders without tiffin subscriptions.</p>
+    <% } else { %>
+        <% thaliOrdersWithoutTiffin.forEach(order => { %>
+            <div class="order-container">
+                <div class="order-header">
+                    <div class="order-id">Order ID: <%= order._id %></div>
+                    <div class="order-user">User: <%= order.userId.name %> (<%= order.userId.email %>)</div>
+                </div>
+                <div class="order-items">
+                    <h3>Thali: <%= order.thaliId.name %></h3>
+                    <p><strong>Quantity:</strong> <%= order.quantity %></p>
+                    <p><strong>Total:</strong> ₹<%= order.total %></p>
+                    <p><strong>Created At:</strong> <%= order.createdAt.toLocaleString() %></p>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+
+    <h2>Tiffin Subscription Orders</h2>
+    <% if (tiffinOrders.length === 0) { %>
+        <p>No tiffin subscription orders.</p>
+    <% } else { %>
+        <% tiffinOrders.forEach(order => { %>
+            <div class="order-container">
+                <div class="order-header">
+                    <div class="order-id">Order ID: <%= order._id %></div>
+                    <div class="order-user">User: <%= order.userId.name %> (<%= order.userId.email %>)</div>
+                </div>
+                <div class="order-items">
+                    <h3>Thali: <%= order.thaliId.name %></h3>
+                    <p><strong>Quantity:</strong> <%= order.quantity %></p>
+                    <p><strong>Total:</strong> ₹<%= order.total %></p>
+                    <p><strong>Created At:</strong> <%= order.createdAt.toLocaleString() %></p>
+                    <p><strong>Duration:</strong> <%= order.duration || 'Not specified' %> days</p>
+                    <p><strong>Starts on:</strong> 
+                        <% 
+                            const startDate = new Date();
+                            startDate.setDate(startDate.getDate() + 5);
+
+                            // Format the date as "31st Oct, 2024"
+                            const day = startDate.getDate();
+                            const month = startDate.toLocaleString('default', { month: 'short' });
+                            const year = startDate.getFullYear();
+
+                            // Function to get the correct ordinal suffix for the day
+                            function getOrdinal(num) {
+                                const suffixes = ["th", "st", "nd", "rd"];
+                                const value = num % 100;
+                                return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+                            }
+                        %>
+                        <%= getOrdinal(day) %> <%= month %>, <%= year %>
+                    </p>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</body>
+</html>

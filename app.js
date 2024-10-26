@@ -37,13 +37,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-app.use(session({
-    secret: 'your_secret', // Change this to a more secure value
-    resave: false,
-    saveUninitialized: false
-}));
 
-// Use connect-flash middleware
+app.use(
+  session({
+      secret: 'your_secret_key', // Replace 'your_secret_key' with a secure key
+      resave: false,
+      saveUninitialized: true
+  })
+);
+
+// Using connect-flash middleware
 app.use(flash());
 
 // Make flash messages available in all views

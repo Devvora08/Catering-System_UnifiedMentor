@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team | Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .message-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        .message-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .message-content {
+            margin-bottom: 5px;
+        }
+        .message-time {
+            font-size: 0.9em;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Team Messages</h1>
+
+    <% if (messages.length > 0) { %>
+        <% messages.forEach(message => { %>
+            <div class="message-container">
+                <div class="message-header"><%= message.senderRole %>:</div>
+                <div class="message-content"><%= message.content %></div>
+                <div class="message-time"><%= message.createdAt.toLocaleString() %></div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>No messages available.</p>
+    <% } %>
+    
+    <a href="/team/home">Back to Home</a> <!-- Link to navigate back to team home -->
+</body>
+</html>

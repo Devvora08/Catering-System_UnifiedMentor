@@ -3,9 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign-up</title>
+    <title>Sign Up</title>
+    <style>
+        .alert {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.btn {
+    padding: 10px 15px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+}
+    </style>
 </head>
 <body>
-    <h1>this is the sign up page, become a member here</h1>
+    <div class="container">
+        <h1>Sign Up</h1>
+
+        <form action="/signup" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" name="name" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" required pattern="[0-9]{9}">
+            </div>
+            <div>
+                <label for="address">Address:</label>
+                <input type="text" name="address" required>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form><br><br>
+        <hr>
+        <br><br>
+        <% if (messages.error && messages.error.length > 0) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+            </div>
+        <% } %>
+
+        <% if (messages.success && messages.success.length > 0) { %>
+            <div class="alert alert-success">
+                <%= messages.success %>
+                <a href="/" class="btn btn-primary">Go to Home</a> <!-- Button to redirect to home -->
+            </div>
+        <% } %>
+    </div>
 </body>
 </html>

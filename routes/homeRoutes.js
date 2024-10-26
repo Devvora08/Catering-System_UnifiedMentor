@@ -8,8 +8,12 @@ const User = require('../model/userSchema');
 router.get("/",(req,res)=>{
     res.render('homePage');
 });
-router.get('/signup',(req,res)=>{
-    res.render("signup");
+router.get('/signup', (req, res) => {
+    const messages = {
+        error: req.flash('error'),
+        success: req.flash('success'),
+    };
+    res.render('signup', { messages }); // Pass messages to EJS
 });
 router.get('/login',(req,res)=>{
     res.render('login')
@@ -45,25 +49,40 @@ router.post('/login',async (req,res)=>{
         console.error('Error creating user:', error);
         return res.status(500).json({ msg: "Internal server error" });
     }
-
-    // const {email, password} = req.body;
-    // if(!email || !password) return res.json({error:"Please enter both credentials properly"});
-
-    // const signedIn = await User.findOne({email:email,password:password});
-    // //retrieve the role from signedin person to redirect them to their routes
-    // const role = signedIn.role;
-    // //console.log(role);
-    // if(!role) return res.json({error:"Please enter both credentials properly"});
-    // if(role == "admin"){
-    //     res.redirect("/admin/home");
-    // }
-    // else if(role == "team"){
-    //     res.redirect("/team/home");
-    // }
-    // else if(role == "user"){
-    //     res.redirect("/user/home");
-    // }
-
 })
+
+router.post('/signup', async (req, res) => {
+    try {
+        const { name, email, password, phone, address } = req.body;
+
+        // Check if the email already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            req.flash('error', 'Email already in use. Please choose another one.');
+            return res.redirect('/signup'); // Redirect back to the signup page
+        }
+
+        // Create a new user without password hashing
+        const newUser = new User({
+            name,
+            email,
+            password,  // Use the plain password as per your setup
+            phone,
+            address,
+            role: 'user', // Default role is user
+        });
+
+        // Save the user to the database
+        await newUser.save();
+
+        // Set flash message for successful signup
+        req.flash('success', 'Congratulations! Your account has been created.');
+        res.redirect('/signup'); // Redirect to home page (or wherever you want)
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'An error occurred while creating your account. Please try again.');
+        res.redirect('/signup'); // Redirect back to the signup page on error
+    }
+});
 
 module.exports = router;

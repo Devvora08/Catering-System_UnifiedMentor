@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .message-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .message-content {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .message-date {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Messages from Admin</h1>
+
+    <% messages.forEach(message => { %>
+        <div class="message-container">
+            <div class="message-content"><%= message.content %></div>
+            <div class="message-date">
+                <%= new Date(message.createdAt).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                }) %>
+            </div>
+        </div>
+    <% }) %>
+
+    <a href="/admin/message" class="back-button">Back to Message Form</a>
+</body>
+</html>

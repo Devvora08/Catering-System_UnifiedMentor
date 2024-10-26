@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Members</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .team-container {
+            margin: 20px 0;
+        }
+        .team-member {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .team-member h3 {
+            margin: 0;
+        }
+        .team-member p {
+            margin: 5px 0;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Team Members</h1>
+    <div class="team-container">
+        <% teamMembers.forEach(member => { %>
+            <div class="team-member">
+                <h3><%= member.name %></h3>
+                <p><strong>Email:</strong> <%= member.email %></p>
+                <p><strong>Phone:</strong> <%= member.phone %></p>
+            </div>
+        <% }) %>
+    </div>
+
+    <a href="/admin/home" class="back-button">Back to Admin Dashboard</a>
+</body>
+</html>
