@@ -3,9 +3,47 @@ const ThaliOrder = require("../model/thaliOrderSchema");
 const User = require("../model/userSchema")
 const Message = require("../model/messageSchema");
 
-function getHome(req,res){
-    res.render("admin/adminHome");
+async function getHome(req, res) {
+    try {
+        // 1. Stats
+        const lastOrder = await Order.findOne().sort({ createdAt: -1 });
+        const userCount = await User.countDocuments();
+        const newUser = await User.findOne({role:"user"}).sort({ createdAt: -1 });
+        const admins = await User.find({ role: 'admin' }); // Assuming 'admin' as role identifier for admins
+        const teamMembers = await User.find({ role: 'team' }); 
+        // 2. Special Preferences
+        const specialPreferences = await Order.find({ specialInstructions: { $exists: true, $ne: null } });
+        
+        // 3. Tiffin Subscribers
+        const tiffinOrders = await ThaliOrder.find({ isTiffin: true }).populate('userId', 'name email phone'); // Assuming userId references the User model
+        const tiffinSubscribers = tiffinOrders.map(order => ({
+            thaliId: order.thaliId, // Assuming thaliId is needed for display
+            name: order.userId.name,
+            email: order.userId.email,
+            phone: order.userId.phone,
+            createdAt: order.createdAt, // Ensure startDate is in the ThaliOrder schema
+            quantity: order.quantity,    // Ensure this field exists in your ThaliOrder schema
+            total: order.total           // Ensure this field exists in your ThaliOrder schema
+        }));
+
+        // 4. Notifications
+        const latestNotification = await Message.findOne().sort({ createdAt: -1 });
+
+        // Render data to EJS
+        res.render("admin/adminHome", {
+            lastOrder,
+            userCount,
+            newUser,
+            specialPreferences,
+            tiffinSubscribers,
+            latestNotification,admins,teamMembers
+        });
+    } catch (error) {
+        console.error("Error fetching admin home data:", error);
+        res.status(500).send("Server Error");
+    }
 }
+
 async function manageOrder(req, res) {
     try {
         const orders = await Order.find({})

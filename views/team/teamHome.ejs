@@ -3,9 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome | Team</title>
+    <title>Team Home - Catering Craft</title>
+    <style>
+        /* Basic styles for feedback section */
+        .feedback-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .feedback-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 200px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>this is a team home page</h1>
+
+    <!-- Navbar -->
+    <nav>
+        <div>
+            <h1>Catering Craft</h1>
+        </div>
+        <div>
+            <a href="/team/messages">Notify</a>
+        </div>
+    </nav>
+
+    <!-- Order Management Section -->
+    <section>
+        <h2>Order Management</h2>
+        <div class="order-boxes">
+            <!-- Simple Order Box -->
+            <div>
+                <h3>Last Simple Order</h3>
+                <p>
+                    <%= lastSimpleOrder ? `Order ID: ${lastSimpleOrder._id} - Total: Rs.${lastSimpleOrder.totalBill}` : "No simple orders yet" %>
+                </p>
+            </div>
+
+            <!-- Thali Order Box -->
+            <div>
+                <h3>Last Thali Order</h3>
+                <p>
+                    <%= lastThaliOrder ? `Order ID: ${lastThaliOrder._id} - Total: Rs.${lastThaliOrder.total}` : "No thali orders yet" %>
+                </p>
+            </div>
+
+            <!-- Tiffin Order Box -->
+            <div>
+                <h3>Last Tiffin Order</h3>
+                <p>
+                    <%= lastTiffinOrder ? `Order ID: ${lastTiffinOrder._id} - Total: Rs.${lastTiffinOrder.total}` : "No tiffin orders yet" %>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Feedback Section -->
+    <section>
+        <h2>Customer Feedback</h2>
+        <div class="feedback-container">
+            <% if (customerFeedback.length > 0) { %>
+                <% customerFeedback.forEach(feedback => { %>
+                    <div class="feedback-box">
+                        <h3><%= feedback.name %></h3>
+                        <p><strong>Order Type:</strong> <%= feedback.orderType %></p>
+                        <p><strong>Feedback:</strong> <%= feedback.description %></p>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No feedback available</p>
+            <% } %>
+        </div>
+    </section>
+    <!-- Notification Section -->
+    <section>
+        <h2>Last Admin Notification</h2>
+        <div class="notification-box">
+            <p><%= lastAdminNotification ? lastAdminNotification.content : "No notifications yet" %></p>
+        </div>
+    </section>
+
+    <!-- Offers Box Section -->
+    <section>
+        <h2>Offers</h2>
+        <form action="/team/create-offer" method="POST">
+            <!-- Offer Discount Percentage -->
+            <label for="discount">Offer Cut (%)</label>
+            <input type="number" name="discount" id="discount" required>
+
+            <!-- Offer Type (Thali or Tiffin) -->
+            <label for="orderType">Order Type</label>
+            <select name="orderType" id="orderType" required>
+                <option value="thali">Thali Orders</option>
+                <option value="tiffin">Tiffin Orders</option>
+                <option value="regular">Regular Orders</option>
+            </select>
+
+            <!-- Offer Date Range -->
+            <label for="startDate">Start Date</label>
+            <input type="date" name="startDate" id="startDate" required>
+
+            <label for="endDate">End Date</label>
+            <input type="date" name="endDate" id="endDate" required>
+
+            <!-- Submit Button -->
+            <button type="submit">Create Offer</button>
+        </form>
+    </section>
+
+    <!-- Team Members Section -->
+    <section>
+        <h2>Team Members</h2>
+        <div class="team-members">
+            <% teamMembers.forEach(member => { %>
+                <p>
+                    <strong>Name:</strong> <%= member.name %> <br>
+                    <strong>Email:</strong> <%= member.email %> <br>
+                    <strong>Role:</strong> <%= member.role %>
+                </p>
+            <% }) %>
+        </div>
+    </section>
+
 </body>
 </html>

@@ -31,7 +31,7 @@ const thaliOrderSchema = new mongoose.Schema({
     duration: {
         type: Number,
         required: false}
-});
+},{ timestamps: true });
 
 // Create the ThaliOrder model
 const ThaliOrder = mongoose.model('ThaliOrder', thaliOrderSchema);

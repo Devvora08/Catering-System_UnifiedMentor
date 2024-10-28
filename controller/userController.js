@@ -3,13 +3,72 @@ const User = require('../model/userSchema');
 const Order = require("../model/orderSchema");
 const Thali = require("../model/thaliSchema");
 const ThaliOrder = require("../model/thaliOrderSchema");
+const Offer = require("../model/offerSchema");
 const mongoose = require('mongoose'); // Make sure you have this at the top of your file
 
 const jwt = require('jsonwebtoken');
 
-function getHome(req, res) {
-    res.render('users/userHome');
+async function getHome(req, res) {
+    try {
+        const userId = req.user._id; // Assuming user ID is stored in the token
+        //console.log(userId);
+        const person = await User.findById(userId);
+        const userName =person.name; // Retrieve the user's name from the token
+
+        // Fetch user orders (assuming you want the last 3 orders)
+        const simpleOrders = await Order.find({ user: userId }).populate('items.foodItem');
+        const thaliOrders = await ThaliOrder.find({ userId }).sort({ createdAt: -1 }).limit(1);
+
+        // Fetch random popular food items
+        const popularItems = await FoodItem.aggregate([{ $sample: { size: 4 } }]); // Fetch 4 random food items
+
+        // Fetch offers and exclude those that belong to the logged-in user
+        const offers = await Offer.find({ userId: { $ne: userId } });
+
+        // Fetch reviews for the home page
+        const randomUsers = await User.aggregate([
+            { $match: { _id: { $ne: userId } } }, // Exclude the current user
+            { $sample: { size: 10 } },
+            { $project: { name: 1 } }
+        ]);
+
+        // Create random order types and descriptions for each user
+        const orderTypes = ['Thali', 'Tiffin', 'Catering'];
+        const descriptions = [
+            "Absolutely loved the food quality!",
+            "The thali was delightful and filling.",
+            "Tiffin service is excellent, highly recommend!",
+            "Great taste, will order again!",
+            "The catering service exceeded my expectations.",
+            "Perfectly spiced dishes, very enjoyable.",
+            "Quick delivery and tasty food!",
+            "The variety in the thali is impressive.",
+            "Fresh and delicious meals every time.",
+            "Satisfying tiffin service with good portions."
+        ];
+
+        const userReviews = randomUsers.map((user, index) => ({
+            name: user.name,
+            orderType: orderTypes[Math.floor(Math.random() * orderTypes.length)],
+            description: descriptions[index % descriptions.length] // Loop through descriptions
+        }));
+
+        // Render the user homepage with the gathered data
+        res.render('users/userHome', {
+            userName,
+            simpleOrders,
+            thaliOrders,
+            popularItems,
+            offers,
+            userReviews
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 }
+
+
 async function displayCategory(req,res){
     const categoryId = req.params.id;
     let foodItems;
@@ -476,6 +535,7 @@ async function getTiffin(req, res) {
 
 async function orderTiffin(req, res) {
     const thaliOrders = [];
+    const person = await User.findById(req.user._id);
 
     try {
         // Loop through each thaliId provided in the request
@@ -504,6 +564,7 @@ async function orderTiffin(req, res) {
                         total: total // Calculate total as quantity * totalPrice
                     });
                 }
+                person.isTiffinSubscriber = true;
             }
         }
 

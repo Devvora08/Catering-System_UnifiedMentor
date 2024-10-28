@@ -3,9 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome | Admin</title>
+    <title>Admin Dashboard - Catering Craft</title>
 </head>
 <body>
-    <h1>this is for admins with roles = admins</h1>
+    <!-- Navbar -->
+    <nav>
+        <div>
+            <!-- Branding -->
+            <h1>Catering Craft</h1>
+        </div>
+        <div>
+            <!-- Navigation Links -->
+            <ul>
+                <li><a href="/admin/ordermanage">Order Management</a></li>
+                <li><a href="/admin/thaliorders">Thali Orders</a></li>
+                <li><a href="/admin/bills">Bills</a></li>
+                <li><a href="/admin/message">Messages</a></li>
+                <li><a href="/admin/team">Team</a></li>
+                <li><a href="/admin/seeMessages">View Messages</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main>
+        <!-- Stats Section -->
+        <section id="stats">
+            <h2>Dashboard Stats</h2>
+            <div>
+                <p><strong>Last Order Made:</strong> <%= lastOrder ? lastOrder.createdAt.toDateString() : "No orders yet" %></p>
+                <p><strong>Total Users:</strong> <%= userCount %></p>
+                <p><strong>Newest User:</strong> <%= newUser ? newUser.name : "No new users" %></p>
+            </div>
+        </section>
+
+        <!-- Special Preferences Section -->
+        <section id="special-preferences">
+            <h2>Special Preferences</h2>
+            <div>
+                <% if (specialPreferences && specialPreferences.length) { %>
+                    <ul>
+                        <% specialPreferences.forEach(pref => { %>
+                            <li>
+                                <p><strong>Order ID:</strong> <%= pref._id %></p>
+                                <p><strong>Details:</strong> <%= pref.specialInstructions %></p>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p>No special preferences at the moment.</p>
+                <% } %>
+            </div>
+        </section>
+
+        <!-- Tiffin Subscribers Section -->
+       <!-- Tiffin Subscribers Section -->
+       <section id="tiffin-subscribers">
+        <h2>Tiffin Subscribers</h2>
+        <% if (tiffinSubscribers && tiffinSubscribers.length) { %>
+            <ul>
+                <% tiffinSubscribers.forEach(subscriber => { %>
+                    <li>
+                        <p><strong>Name:</strong> <%= subscriber.name %></p>
+                        <p><strong>Email:</strong> <%= subscriber.email %></p>
+                        <p><strong>Phone:</strong> <%= subscriber.phone || "N/A" %></p>
+                        <p><strong>Thali ID:</strong> <%= subscriber.thaliId %></p>
+                        <% 
+                          // Calculate the starting date by adding 5 days to the createdAt date
+                          const startingDate = new Date(subscriber.createdAt);
+                          startingDate.setDate(startingDate.getDate() + 5);
+                        %>
+                        <p><strong>Start Date:</strong> <%= startingDate.toDateString() || "Not Available" %></p>
+                        <p><strong>Quantity:</strong> <%= subscriber.quantity || "Not Available" %></p>
+                        <p><strong>Recent Bill:</strong> ₹<%= subscriber.total || "Not Available" %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No tiffin subscribers found.</p>
+        <% } %>
+    </section>
+
+
+        <!-- Notification Panel Section -->
+        <section id="notifications">
+            <h2>Notification Panel</h2>
+            <div>
+                <p><strong>Last Notification:</strong> <%= latestNotification ? latestNotification.content : "No notifications" %></p>
+            </div>
+        </section>
+        <!-- Team and Admins Section -->
+<section id="catering-team">
+    <h2>Our Catering Team</h2>
+
+    <!-- Admins List -->
+    <h3>Admins</h3>
+    <% if (admins && admins.length) { %>
+        <ul>
+            <% admins.forEach(admin => { %>
+                <li>
+                    <p><strong>Name:</strong> <%= admin.name %></p>
+                    <p><strong>Email:</strong> <%= admin.email %></p>
+                    <p><strong>Phone:</strong> <%= admin.phone || "N/A" %></p>
+                    <p><strong>Role:</strong> Admin</p>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No admins available at the moment.</p>
+    <% } %>
+
+    <!-- Team Members List -->
+    <h3>Team Members</h3>
+    <% if (teamMembers && teamMembers.length) { %>
+        <ul>
+            <% teamMembers.forEach(member => { %>
+                <li>
+                    <p><strong>Name:</strong> <%= member.name %></p>
+                    <p><strong>Email:</strong> <%= member.email %></p>
+                    <p><strong>Phone:</strong> <%= member.phone || "N/A" %></p>
+                    <p><strong>Role:</strong> Team Member</p>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No team members available at the moment.</p>
+    <% } %>
+</section>
+
+    </main>
 </body>
 </html>
