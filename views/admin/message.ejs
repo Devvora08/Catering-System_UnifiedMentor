@@ -3,23 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Send Message to Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Elegant Font -->
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181818; /* Dark background */
+            color: #e0e0e0; /* Light gray text */
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+        .navbar {
+            background-color: #242424; /* Darker gray for navbar */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid #444; /* Subtle bottom border */
+        }
+        .navbar h1 {
+            margin: 0;
+            color: #c0c0c0; /* Gold color for elegance */
+            font-weight: 700; /* Bold for emphasis */
+        }
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin-right: 4%;
+            display: flex;
+            gap: 20px;
+        }
+        .navbar ul li {
+            display: inline;
+        }
+        .navbar a {
+            color: #e0e0e0;
+            text-decoration: none;
+            
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .navbar a:hover {
+            
+            color: #4dff00; /* Gold color on hover */
         }
         .form-container {
             width: 100%;
             max-width: 600px;
-            margin: 20px auto;
+            margin: 100px auto; /* Center form below navbar */
             padding: 20px;
-            border: 1px solid #ddd;
+            border: none;
             border-radius: 8px;
-            background-color: #f9f9f9;
+            background-color: #2a2a2a; /* Dark background for form */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease, opacity 0.5s ease; /* Transition for form */
+            opacity: 0; /* Initially hidden for transition effect */
+            transform: translateY(-20px); /* Initial position for effect */
         }
         .form-container h2 {
             margin-top: 0;
             font-size: 1.5em;
-            color: #333;
+            color: #ffcc00; /* Gold color for title */
         }
         .form-group {
             margin-bottom: 15px;
@@ -30,14 +80,13 @@
             margin-bottom: 5px;
         }
         .form-group textarea {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             font-size: 1em;
             border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        .form-group input[type="hidden"] {
-            display: none;
+            border: 1px solid #444; /* Dark border */
+            background-color: #3c3c3c; /* Darker background for textarea */
+            color: #e0e0e0; /* Light gray text for textarea */
         }
         .submit-btn {
             padding: 10px 20px;
@@ -47,33 +96,66 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
         }
         .submit-btn:hover {
             background-color: #0056b3;
         }
+        .see-messages-btn {
+            position: relative;
+            left:43%;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #28a745; /* Green color */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block; /* Make it block level for centering */
+            text-align: center; /* Center text inside */
+            width: 10%; /* Full width for centering */
+        }
+        .see-messages-btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
-
-    <div class="form-container">
+    <div class="navbar">
+        <h1>Catering Craft</h1>
+        <ul>
+            <li><a href="/admin/thaliorders">Thali-Orders</a></li>
+            <li><a href="/admin/bills">Bills</a></li>
+            <li><a href="/admin/ordermanage">Manage-Orders</a></li>
+            <li><a href="/admin/team">Team</a></li>
+            <li><a href="/admin/seeMessages">View Messages</a></li>
+            <li><a href="/admin/home">Home</a></li>
+        </ul>
+    </div>
+    <div class="form-container" id="formContainer">
         <h2>Send a Message to Team</h2>
         <form action="/admin/message" method="POST">
-            <!-- Hidden field to set sender role as 'admin' -->
             <input type="hidden" name="senderRole" value="admin">
-            <!-- Hidden field to set recipient role as 'team' -->
             <input type="hidden" name="recipientRole" value="team">
-
-            <!-- Message Content -->
             <div class="form-group">
                 <label for="content">Message Content</label>
                 <textarea name="content" id="content" rows="5" placeholder="Enter your message here..." required></textarea>
             </div>
-
-            <!-- Submit Button -->
             <button type="submit" class="submit-btn">Send Message</button>
         </form>
     </div>
-    <button onclick="window.location.href='/admin/seeMessages'">See Messages</button>
+    <button class="see-messages-btn" onclick="window.location.href='/admin/seeMessages'">See Messages</button>
 
+    <script>
+        window.onload = function() {
+            const formContainer = document.getElementById('formContainer');
+            formContainer.style.opacity = 1; // Make the form visible
+            formContainer.style.transform = 'translateY(0)'; // Reset position
+        };
+    </script>
 </body>
 </html>

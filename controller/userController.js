@@ -72,33 +72,29 @@ async function getHome(req, res) {
 async function displayCategory(req,res){
     const categoryId = req.params.id;
     let foodItems;
+    const cuisineMapping = {
+        jain: { isJain: true },
+        continental: { cuisineType: 'Continental' },
+        gujarati: { $or: [{ cuisineType: 'Gujarati' }, { cuisineType: 'Indian' }] },
+        southindian: { $or: [{ cuisineType: 'South Indian' }, { cuisineType: 'Indian' }] },
+        chinese: { $or: [{ cuisineType: 'Chinese' }, { cuisineType: 'Indian' }] },
+        punjabi: { $or: [{ cuisineType: 'Punjabi' }, { cuisineType: 'Indian' }] },
+        indian: { cuisineType: { $ne: 'Continental' } }
+    };
 
     try {
         if (categoryId === 'jain') {
-            // Get all Jain items
-            foodItems = await FoodItem.find({ isJain: true });
-        } else if (categoryId === 'continental') {
-            // Get all Continental items
-            foodItems = await FoodItem.find({ cuisineType: 'Continental' });
-        } else if (['gujarati', 'southindian', 'chinese', 'punjabi'].includes(categoryId)) {
-            // Get specific cuisine items plus Indian cuisine
-            foodItems = await FoodItem.find({
-                $or: [
-                    { cuisineType: categoryId },
-                    { cuisineType: 'Indian' }
-                ]
-            });
-        } else if (categoryId === 'indian') {
-            // Get all Indian items except Continental
-            foodItems = await FoodItem.find({
-                cuisineType: { $ne: 'Continental' }
-            });
+            // Retrieve all Jain items
+            foodItems = await FoodItem.find(cuisineMapping.jain);
+        } else if (cuisineMapping[categoryId]) {
+            // Use mapped value if category exists in the map
+            foodItems = await FoodItem.find(cuisineMapping[categoryId]);
         } else {
             return res.status(404).send('Category not found');
         }
-
         // Render the page with the retrieved food items
         res.render('users/categoryDisplay', { foodItems, categoryId });
+        //res.json(categoryId)
     } catch (error) {
         console.error('Error retrieving food items:', error);
         res.status(500).send('Server Error');
@@ -281,7 +277,7 @@ async function giveOrder(req,res){
 
     try {
         await newOrder.save(); // Save the order to the database
-         req.flash('info',` Our team member ${teamMember.name} will send you an order recommendation.Check Homepage soon `);
+         req.flash('info',` Our team member ${teamMember.name} will send you an order recommendation.Check Cart soon `);
          res.redirect('/user/suggestorder');
     } catch (error) {
         console.error(error);
@@ -326,9 +322,9 @@ async function getCart(req, res) {
     try {
         const order = await Order.findOne({ user: userId, status: 'pending' }).populate('items.foodItem');
 
-        if (!order) {
-            return res.redirect('/user/order');  // Redirect to order page if no pending order
-        }
+        // if (!order) {
+        //     return res.redirect('/user/order');  // Redirect to order page if no pending order
+        // }
 
         const user = await User.findById(userId);  // Get user details
 

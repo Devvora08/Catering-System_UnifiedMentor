@@ -5,103 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thali Orders Management</title>
     <style>
+        /* Font and Body Styling */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            overflow-x: hidden;
         }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+          
+            background-color: #1e1e1e;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar h1 {
+            color: #00bcd4; /* Ocean blue color */
+            margin-left: 3%;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            color: #f4f4f4;
+            text-decoration: none;
+            padding: 8px 12px;
+            transition: color 0.2s;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .navbar ul li a:hover {
+            color: #00bcd4; /* Ocean blue hover effect */
+        }
+
+        /* Page Title */
+        .page-title {
+            color: #00bcd4; /* Ocean blue color */
+            font-size: 2.5em;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        /* Section Styling */
+        .section {
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 2em;
+            padding: 1.5em;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        .section-title {
+            color: #00bcd4; /* Ocean blue color */
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        /* No Orders Message */
+        .no-orders {
+            color: #b3b3b3;
+            text-align: center;
+        }
+
+        /* Order Container Styling */
         .order-container {
-            border: 1px solid #ddd;
+            border: 1px solid #333;
             border-radius: 8px;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f9f9f9;
+            padding: 1em;
+            margin-bottom: 1.5em;
+            background-color: #292929;
+            transition: background-color 0.3s ease;
         }
-        .order-header, .order-items, .order-summary {
-            margin-bottom: 10px;
+
+        .order-container:hover {
+            background-color: #333;
         }
+
+        /* Order Header */
         .order-header {
             display: flex;
             justify-content: space-between;
+            font-size: 1.1em;
+            margin-bottom: 0.8em;
         }
+
         .order-id, .order-user {
-            font-weight: bold;
+            color: #00bcd4; /* Ocean blue color */
+            font-weight: 500;
         }
-        .item-list {
-            list-style: none;
-            padding: 0;
+
+        /* Order Details */
+        .order-items h3,
+        .order-items p {
+            margin: 0.3em 0;
         }
-        .item-list li {
-            margin-bottom: 5px;
+
+        .order-thali-name {
+            font-size: 1.3em;
+            color: #f4f4f4;
+            margin-bottom: 0.5em;
         }
+
+        .order-quantity, .order-total, .order-created, .order-duration, .order-start-date {
+            color: #d9d9d9;
+        }
+
+        /* Button Styling */
         .delete-button {
-            color: red;
+            color: #ff4747;
+            font-size: 0.9em;
             cursor: pointer;
+            transition: color 0.2s;
             border: none;
             background: none;
-            font-size: 0.9em;
+        }
+
+        .delete-button:hover {
+            color: #ff6161;
+        }
+
+        /* Animation */
+        .order-container, .section {
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Thali Orders Management</h1>
+    <div class="navbar">
+        <h1>Catering Craft</h1>
+        <ul>
+            <li><a href="/admin/ordermanage">Order Management</a></li>
+            <li><a href="/admin/bills">Bills</a></li>
+            <li><a href="/admin/message">Messages</a></li>
+            <li><a href="/admin/team">Team</a></li>
+            <li><a href="/admin/seeMessages">View Messages</a></li>
+            <li><a href="/admin/home">Home</a></li>
+        </ul>
+    </div>
+    
+    <h1 class="page-title">Thali Orders Management</h1>
 
-    <h2>Thali Orders (No Tiffin Subscription)</h2>
-    <% if (thaliOrdersWithoutTiffin.length === 0) { %>
-        <p>No thali orders without tiffin subscriptions.</p>
-    <% } else { %>
-        <% thaliOrdersWithoutTiffin.forEach(order => { %>
-            <div class="order-container">
-                <div class="order-header">
-                    <div class="order-id">Order ID: <%= order._id %></div>
-                    <div class="order-user">User: <%= order.userId.name %> (<%= order.userId.email %>)</div>
+    <section class="section thali-orders-no-tiffin">
+        <h2 class="section-title">Thali Orders (No Tiffin Subscription)</h2>
+        <% if (thaliOrdersWithoutTiffin.length === 0) { %>
+            <p class="no-orders">No thali orders without tiffin subscriptions.</p>
+        <% } else { %>
+            <% thaliOrdersWithoutTiffin.forEach(order => { %>
+                <div class="order-container">
+                    <div class="order-header">
+                        <div class="order-id">Order ID: <%= order._id %></div>
+                        <div class="order-user">User: <%= order.userId.name %> (<%= order.userId.email %>)</div>
+                    </div>
+                    <div class="order-items">
+                        <h3 class="order-thali-name">Thali: <%= order.thaliId.name %></h3>
+                        <p class="order-quantity"><strong>Quantity:</strong> <%= order.quantity %></p>
+                        <p class="order-total"><strong>Total:</strong> ₹<%= order.total %></p>
+                        <p class="order-created"><strong>Created At:</strong> <%= order.createdAt.toLocaleString() %></p>
+                    </div>
                 </div>
-                <div class="order-items">
-                    <h3>Thali: <%= order.thaliId.name %></h3>
-                    <p><strong>Quantity:</strong> <%= order.quantity %></p>
-                    <p><strong>Total:</strong> ₹<%= order.total %></p>
-                    <p><strong>Created At:</strong> <%= order.createdAt.toLocaleString() %></p>
-                </div>
-            </div>
-        <% }) %>
-    <% } %>
+            <% }) %>
+        <% } %>
+    </section>
 
-    <h2>Tiffin Subscription Orders</h2>
-    <% if (tiffinOrders.length === 0) { %>
-        <p>No tiffin subscription orders.</p>
-    <% } else { %>
-        <% tiffinOrders.forEach(order => { %>
-            <div class="order-container">
-                <div class="order-header">
-                    <div class="order-id">Order ID: <%= order._id %></div>
-                    <div class="order-user">User: <%= order.userId.name %> (<%= order.userId.email %>)</div>
-                </div>
-                <div class="order-items">
-                    <h3>Thali: <%= order.thaliId.name %></h3>
-                    <p><strong>Quantity:</strong> <%= order.quantity %></p>
-                    <p><strong>Total:</strong> ₹<%= order.total %></p>
-                    <p><strong>Created At:</strong> <%= order.createdAt.toLocaleString() %></p>
-                    <p><strong>Duration:</strong> <%= order.duration || 'Not specified' %> days</p>
-                    <p><strong>Starts on:</strong> 
-                        <% 
-                            const startDate = new Date();
-                            startDate.setDate(startDate.getDate() + 5);
+    <section class="section tiffin-subscription-orders">
+        <h2 class="section-title">Tiffin Subscription Orders</h2>
+        <% if (tiffinOrders.length === 0) { %>
+            <p class="no-orders">No tiffin subscription orders.</p>
+        <% } else { %>
+            <% tiffinOrders.forEach(order => { %>
+                <div class="order-container">
+                    <div class="order-header">
+                        <div class="order-id">Order ID: <%= order._id %></div>
+                        <div class="order-user">User: <%= order.userId.name %> (<%= order.userId.email %>)</div>
+                    </div>
+                    <div class="order-items">
+                        <h3 class="order-thali-name">Thali: <%= order.thaliId.name %></h3>
+                        <p class="order-quantity"><strong>Quantity:</strong> <%= order.quantity %></p>
+                        <p class="order-total"><strong>Total:</strong> ₹<%= order.total %></p>
+                        <p class="order-created"><strong>Created At:</strong> <%= order.createdAt.toLocaleString() %></p>
+                        <p class="order-duration"><strong>Duration:</strong> <%= order.duration || 'Not specified' %> days</p>
+                        <p class="order-start-date"><strong>Starts on:</strong> 
+                            <% 
+                                const startDate = new Date();
+                                startDate.setDate(startDate.getDate() + 5);
 
-                            // Format the date as "31st Oct, 2024"
-                            const day = startDate.getDate();
-                            const month = startDate.toLocaleString('default', { month: 'short' });
-                            const year = startDate.getFullYear();
+                                const day = startDate.getDate();
+                                const month = startDate.toLocaleString('default', { month: 'short' });
+                                const year = startDate.getFullYear();
 
-                            // Function to get the correct ordinal suffix for the day
-                            function getOrdinal(num) {
-                                const suffixes = ["th", "st", "nd", "rd"];
-                                const value = num % 100;
-                                return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
-                            }
-                        %>
-                        <%= getOrdinal(day) %> <%= month %>, <%= year %>
-                    </p>
+                                function getOrdinal(num) {
+                                    const suffixes = ["th", "st", "nd", "rd"];
+                                    const value = num % 100;
+                                    return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+                                }
+
+                                const ordinalDate = getOrdinal(day);
+                            %>
+                            <%= `${ordinalDate} ${month} ${year}` %>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        <% }) %>
-    <% } %>
+            <% }) %>
+        <% } %>
+    </section>
 </body>
 </html>

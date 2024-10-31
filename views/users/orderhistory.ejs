@@ -1,46 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History</title>
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0a0a0a, #000000); /* Dark gradient background */
+    color: #e0e0e0; /* Light grey text for better readability */
+}
+
+.navbar {
+    background: linear-gradient(135deg, #1b1b1b, #000000); /* Darker gradient for navbar */
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #e0e0e0; /* Light grey links */
+    transition: color 0.3s;
+}
+.logo {
+    font-size: 35px; /* Logo font size */
+    color: #ffffff; /* White color for logo */
+    font-weight: bold; /* Logo weight */
+    margin-left: 5%;
+}
+.nav-links a:hover {
+    color: #4c4c4c; /* Highlight color on hover */
+}
+
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease forwards; /* Apply fade-in animation */
+}
+
+.order {
+    background-color: rgba(30, 30, 30, 0.8); /* Dark grey for order boxes */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+h1, h2, h3 {
+    margin: 10px 0;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #949494;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #414141; /* Darker shade on hover */
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Start transparent */
+        transform: translateY(20px); /* Start slightly lower */
+    }
+    to {
+        opacity: 1; /* Fully visible */
+        transform: translateY(0); /* End position */
+    }
+}
+
+    </style>
 </head>
-
 <body>
-    <h1>Your Order History</h1>
+    <nav class="navbar">
+        <div class="logo">Catering Craft</div>
+        <ul class="nav-links">
+            <li><a href="/user/home">Home</a></li>
+            <li><a href="/user/order">Order</a></li>
+            <li><a href="/user/cart">Food Cart</a></li>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="/user/thali/history">Thali-Orders</a></li>
+            <li><a href="/user/suggestorder">Suggest me Order</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>Your Order History</h1>
 
-    <% if (orders.length > 0) { %>
-        <% orders.forEach(order => { %>
-            <div class="order">
-                <h2>Order ID: <%= order._id %></h2>
-                <p><strong>Status:</strong> <%= order.status %></p>
-                <p><strong>Date:</strong> <%= order.createdAt.toDateString() %></p>
-                <h3>User Details</h3>
-                <p><strong>Name:</strong> <%= user.name %></p>
-                <p><strong>Email:</strong> <%= user.email %></p>
-                <p><strong>Contact:</strong> <%= user.phone %></p>
-                <p><strong>Address:</strong> <%= order.deliveryAddress.join(', ') %></p>
+        <% if (orders.length > 0) { %>
+            <% orders.forEach(order => { %>
+                <div class="order">
+                    <h2>Order ID: <%= order._id %></h2>
+                    <p><strong>Status:</strong> <%= order.status %></p>
+                    <p><strong>Date:</strong> <%= new Date(order.createdAt).toLocaleDateString() %></p>
+                    <h3>User Details</h3>
+                    <p><strong>Name:</strong> <%= user.name %></p>
+                    <p><strong>Email:</strong> <%= user.email %></p>
+                    <p><strong>Contact:</strong> <%= user.phone %></p>
+                    <p><strong>Address:</strong> <%= order.deliveryAddress.join(', ') %></p>
 
-                <h3>Order Items</h3>
-                <ul>
-                    <% order.items.forEach(item => { %>
-                        <li>
-                            <%= item.foodItem.name %> - Quantity: <%= item.quantity %> - Price: <%= item.foodItem.price * item.quantity %> Rs
-                        </li>
-                    <% }) %>
-                </ul>
+                    <h3>Order Items</h3>
+                    <ul>
+                        <% order.items.forEach(item => { %>
+                            <li>
+                                <%= item.foodItem.name %> - Quantity: <%= item.quantity %> - Price: <%= (item.foodItem.price * item.quantity).toFixed(2) %> Rs
+                            </li>
+                        <% }) %>
+                    </ul>
 
-                <h3>Total Amount: <%= order.totalBill %> Rs</h3>
-                <p><strong>Special Instructions:</strong> <%= order.specialInstructions || 'None' %></p>
-            </div>
-            <hr>
-        <% }) %>
-    <% } else { %>
-        <p>You have no orders yet.</p>
-    <% } %>
+                    <h3>Total Amount: <%= order.totalBill.toFixed(2) %> Rs</h3>
+                    <p><strong>Special Instructions:</strong> <%= order.specialInstructions || 'None' %></p>
+                </div>
+                <hr>
+            <% }) %>
+        <% } else { %>
+            <p>You have no orders yet.</p>
+        <% } %>
 
-    <a href="/user/cart">Go back to Cart</a>
+        <a class="back-button" href="/user/cart">Go back to Cart</a>
+    </div>
 </body>
-
 </html>

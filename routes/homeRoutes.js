@@ -1,12 +1,44 @@
 const express = require('express');
 const router = express.Router();
 const {setUser} = require('../service/auth');
-
+const FoodItem = require("../model/foodItemsSchema");
+const Offer = require("../model/offerSchema");
 const User = require('../model/userSchema');
 
 //for home routes no need to make controller, keep here 
-router.get("/",(req,res)=>{
-    res.render('homePage');
+router.get("/", async (req, res) => {
+    try {
+        // 1. Retrieve features (could be hard-coded or retrieved from a model)
+        const features = [
+            { title: 'Thali', image: '/static/mainhome/mainhome1.webp' },
+            { title: 'Tiffin', image: '/static/mainhome/mainhome2.avif' },
+            { title: 'Catering', image: '/static/mainhome/mainhome3.jpg' },
+            { title: 'Jain', image: '/static/mainhome/mainhome4.png' },
+            { title: 'Continental', image: '/static/mainhome/mainhome5.jpg' }
+        ];
+
+        // 2. Retrieve random food items for the carousel
+        const randomFoodItems = await FoodItem.find({});
+
+        // 3. Retrieve ongoing offers
+        const ongoingOffers = await Offer.find().sort({ createdAt: -1 }).limit(3);
+
+        // 4. Retrieve team members
+        const teamMembers = await User.find({ role: 'team' }).limit(5); // Assuming 'team' role for members
+        const admins = await User.find({ role: 'admin' }).limit(2); // Assuming 'admin' role for admins
+
+        // Render home page with the retrieved data
+        res.render('homePage', {
+            features,
+            randomFoodItems,
+            ongoingOffers,
+            teamMembers,
+            admins
+        });
+    } catch (error) {
+        console.error("Error fetching data for home page:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 router.get('/signup', (req, res) => {
     const messages = {

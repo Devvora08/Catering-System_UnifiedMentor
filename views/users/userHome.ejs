@@ -1,380 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage | Welcome</title>
     <style>
-        *{
+        * {
             margin: 0;
+            color: white;
         }
+
+        body {
+            background: linear-gradient(135deg, #000e1b, #011122);
+        }
+
+        /* CSS Styling */
+        /* CSS Styling */
         .navbar {
-    display: flex; /* Flexbox for alignment */
-    justify-content: space-between; /* Space between logo and links */
-    align-items: center; /* Center vertically */
-    padding: 10px 20px; /* Padding around the navbar */
-    background: linear-gradient(135deg, #001f3f, #003366); /* Dark blue gradient background */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #000000, #00183100);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1s ease-out forwards;
+            /* Apply animation */
+        }
 
-.logo {
-    font-size: 24px; /* Logo font size */
-    color: #ffffff; /* White color for logo */
-    font-weight: bold; /* Logo weight */
-}
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
 
-.nav-links {
-    display: flex; /* Display links in a row */
-}
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.nav-links li {
-    margin-left: 20px; /* Spacing between links */
-    background-color: transparent;
-    border: none;
+        .logo {
+            font-size: 35px;
+            color: #ffffff;
+            font-weight: bold;
+            margin-left: 5%;
+        }
 
-}
+        .nav-links {
+            display: flex;
+        }
 
-.nav-links a {
-    text-decoration: none; /* Remove underline from links */
-    color: #fbfbfb; /* White color for links */
-    font-size: 20px; /* Link font size */
-    transition: color 0.3s, transform 0.3s; /* Smooth transition for color and transform */
-}
+        .nav-links li {
+            margin-left: 20px;
+            background-color: transparent;
+            border: none;
+        }
 
-.nav-links a:hover {
-    color: #ff5cf4; /* Gold color on hover */
-    transform: scale(1.05); /* Slightly increase size on hover */
-}
+        .nav-links a {
+            text-decoration: none;
+            color: #fbfbfb;
+            font-size: 20px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff5cf4;
+            transform: scale(1.05);
+        }
+
+
 
         .cuisine-links {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    justify-content: center; /* Center items horizontally */
-    margin: 20px 0; /* Space above and below the section */
-}
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap to the next line */
+            justify-content: center;
+            /* Center items horizontally */
+            margin: 20px 0;
+            /* Space above and below the section */
+        }
 
-.cuisine-box {
-    position: relative;
-    width: 150px; /* Fixed width for the image box */
-    height: 150px; /* Fixed height for the image box */
-    text-decoration: none; /* Remove underline from links */
-    color: #fff; /* Default text color */
-    overflow: hidden; /* Hide any overflow from the box */
-    border-radius: 8px; /* Rounded corners */
-    margin: 10px; /* Space between boxes */
-}
+        .cuisine-box {
+            position: relative;
+            width: 150px;
+            /* Fixed width for the image box */
+            height: 150px;
+            /* Fixed height for the image box */
+            text-decoration: none;
+            /* Remove underline from links */
+            color: #fff;
+            /* Default text color */
+            overflow: hidden;
+            /* Hide any overflow from the box */
+            border-radius: 8px;
+            /* Rounded corners */
+            margin: 10px;
+            /* Space between boxes */
+        }
 
-.cuisine-box img {
-    width: 100%; /* Image takes full width of the box */
-    height: 100%; /* Image takes full height of the box */
-    object-fit: cover; /* Ensures the image covers the box without stretching */
-    transition: transform 0.3s ease; /* Smooth transition for hover effect */
-}
+        .cuisine-box img {
+            width: 100%;
+            /* Image takes full width of the box */
+            height: 100%;
+            /* Image takes full height of the box */
+            object-fit: cover;
+            /* Ensures the image covers the box without stretching */
+            transition: transform 0.3s ease;
+            /* Smooth transition for hover effect */
+        }
 
-.cuisine-box:hover img {
-    transform: scale(1.05); /* Scale the image slightly on hover */
-}
+        .cuisine-box:hover img {
+            transform: scale(1.05);
+            /* Scale the image slightly on hover */
+        }
 
-.cuisine-name {
-    position: absolute; /* Position text absolutely within the box */
-    bottom: 0; /* Align text to the bottom */
-    left: 0; /* Align text to the left */
-    right: 0; /* Align text to the right */
-    background-color: rgba(0, 0, 0, 0.6); /* Dark background for readability */
-    color: #fff; /* White text color */
-    font-size: 18px; /* Text size */
-    padding: 8px 0; /* Padding for text */
-    text-align: center; /* Center the text */
-    font-weight: bold; /* Bold text */
-    z-index: 1; /* Ensure text is on top */
-}
-.order-buttons {
-    display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-    margin: 20px 0; /* Space above and below the section */
-}
+        .cuisine-name {
+            position: absolute;
+            /* Position text absolutely within the box */
+            bottom: 0;
+            /* Align text to the bottom */
+            left: 0;
+            /* Align text to the left */
+            right: 0;
+            /* Align text to the right */
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Dark background for readability */
+            color: #fff;
+            /* White text color */
+            font-size: 18px;
+            /* Text size */
+            padding: 8px 0;
+            /* Padding for text */
+            text-align: center;
+            /* Center the text */
+            font-weight: bold;
+            /* Bold text */
+            z-index: 1;
+            /* Ensure text is on top */
+        }
 
-.order-button {
-    position: relative;
-    width: 450px; /* Decreased width for a taller rectangle */
-    height: 550px; /* Fixed height for the image box */
-    text-decoration: none; /* Remove underline from links */
-    margin: 10px; /* Space between buttons */
-    overflow: hidden; /* Hide any overflow from the box */
-    border-radius: 8px; /* Rounded corners */
-    transition: transform 0.3s ease; /* Smooth transition for hover effect */
-}
+        .order-buttons {
+            display: flex;
+            justify-content: center;
+            /* Center the buttons horizontally */
+            margin: 20px 0;
+            /* Space above and below the section */
+        }
 
-.order-button:hover {
-    transform: scale(1.05); /* Scale the button slightly on hover */
-}
+        .order-button {
+            position: relative;
+            width: 450px;
+            /* Decreased width for a taller rectangle */
+            height: 550px;
+            /* Fixed height for the image box */
+            text-decoration: none;
+            /* Remove underline from links */
+            margin: 10px;
+            /* Space between buttons */
+            overflow: hidden;
+            /* Hide any overflow from the box */
+            border-radius: 8px;
+            /* Rounded corners */
+            transition: transform 0.3s ease;
+            /* Smooth transition for hover effect */
+        }
 
-.order-image {
-    width: 100%; /* Image takes full width of the box */
-    height: 100%; /* Image takes full height of the box */
-    object-fit: cover; /* Ensures the image covers the box without stretching */
-    transition: transform 0.3s ease; /* Smooth transition for hover effect */
-}
+        .order-button:hover {
+            transform: scale(1.05);
+            /* Scale the button slightly on hover */
+        }
 
-.order-button:hover .order-image {
-    transform: scale(1.1); /* Scale the image slightly on hover */
-}
+        .order-image {
+            width: 100%;
+            /* Image takes full width of the box */
+            height: 100%;
+            /* Image takes full height of the box */
+            object-fit: cover;
+            /* Ensures the image covers the box without stretching */
+            transition: transform 0.3s ease;
+            /* Smooth transition for hover effect */
+        }
 
-.order-name {
-    position: absolute; /* Position text absolutely within the button */
-    bottom: 0; /* Align text to the bottom */
-    left: 0; /* Align text to the left */
-    right: 0; /* Align text to the right */
-    background-color: rgba(0, 0, 0, 0.6); /* Dark background for readability */
-    color: #fff; /* White text color */
-    font-size: 18px; /* Text size */
-    padding: 8px 0; /* Padding for text */
-    text-align: center; /* Center the text */
-    font-weight: bold; /* Bold text */
-}
-.typing-animation {
-    font-size: 24px; /* Adjust font size as needed */
-    font-family: 'Courier New', Courier, monospace; /* Typewriter font */
-    white-space: nowrap; /* Prevent line breaks */
-    overflow: hidden; /* Hide overflow */
-    border-right: 3px solid; /* Cursor effect */
-    display: inline; /* Keep it inline with the static text */
-}
+        .order-button:hover .order-image {
+            transform: scale(1.1);
+            /* Scale the image slightly on hover */
+        }
 
-#static-text {
-    font-size: 24px; /* Ensure static text matches animated text size */
-    display: inline; /* Keep static text inline */
-}
+        .order-name {
+            position: absolute;
+            /* Position text absolutely within the button */
+            bottom: 0;
+            /* Align text to the bottom */
+            left: 0;
+            /* Align text to the left */
+            right: 0;
+            /* Align text to the right */
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Dark background for readability */
+            color: #fff;
+            /* White text color */
+            font-size: 18px;
+            /* Text size */
+            padding: 8px 0;
+            /* Padding for text */
+            text-align: center;
+            /* Center the text */
+            font-weight: bold;
+            /* Bold text */
+        }
 
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
+        .welcome-message {
+            position: relative;
+            background-image: url("/static/textwallpaper.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+            /* Text color for visibility on background */
+            box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
+            /* Dark overlay for readability */
+        }
 
-@keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: black; }
-}
-.orders {
-    max-width: 800px; /* Set a max width for the orders container */
-    margin: 0 auto; /* Center the container */
-    padding: 20px; /* Add some padding around the container */
-    background-color: #ffffff; /* White background for the container */
-    border-radius: 10px; /* Rounded corners for the container */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
+        .welcome-message h1 {
+            font-size: 6em;
+            /* Very large font for h1 */
+            font-weight: bold;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
 
-.order-section {
-    margin-bottom: 30px; /* Space between sections */
-}
+        .typing-animation-container {
+            font-size: 3em;
+            /* Enlarged font size for animation text */
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+            z-index: 1;
+            display: inline-block;
+        }
 
-.order-box {
-    border: 1px solid #dcdcdc; /* Light gray border for each order */
-    padding: 15px; /* Padding inside each order box */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #f9f9f9; /* Light background color for the box */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
+        #static-text {
+            font-size: 1.1em;
+            /* Ensure static text matches animated text size */
+            display: inline;
+            /* Keep static text inline */
+        }
 
-.order-box:hover {
-    background-color: #f1f1f1; /* Darker background on hover */
-}
+        @keyframes typing {
+            from {
+                width: 0;
+            }
 
-h2 {
-    font-size: 2em; /* Main heading size */
-    text-align: center; /* Center the main heading */
-    color: #333; /* Dark color for the main heading */
-    margin-bottom: 20px; /* Space below the main heading */
-}
+            to {
+                width: 100%;
+            }
+        }
 
-h3 {
-    font-size: 1.5em; /* Section heading size */
-    color: #4a4a4a; /* Darker color for section headers */
-    margin-bottom: 15px; /* Space below section headers */
-}
+        @keyframes blink-caret {
 
-h4, h5, h6 {
-    margin: 5px 0; /* Space around subheadings */
-    color: #555; /* Slightly lighter color for subheadings */
-}
+            from,
+            to {
+                border-color: transparent;
+            }
 
-p {
-    margin: 5px 0; /* Space around paragraphs */
-    font-size: 1em; /* Standard font size for text */
-    color: #666; /* Gray color for text */
-}
+            50% {
+                border-color: black;
+            }
+        }
 
-ul {
-    list-style-type: none; /* Remove default bullet points */
-    padding: 0; /* Remove padding */
-}
+        .orders {
+            max-width: 800px;
+            /* Set a max width for the orders container */
+            margin: 0 auto;
+            /* Center the container */
+            padding: 20px;
+            /* Add some padding around the container */
+            background-color: #ffffff;
+            /* White background for the container */
+            border-radius: 10px;
+            /* Rounded corners for the container */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
 
-li {
-    margin: 10px 0; /* Space between list items */
-    padding: 10px; /* Padding inside each list item */
-    border: 1px solid #e0e0e0; /* Light border for list items */
-    border-radius: 5px; /* Rounded corners for list items */
-    background-color: #ffffff; /* White background for list items */
-    transition: transform 0.2s; /* Smooth transition for hover effect */
-}
+        .order-section {
+            margin-bottom: 30px;
+            /* Space between sections */
+        }
 
-li:hover {
-    transform: scale(1.02); /* Slightly enlarge list item on hover */
-}
+        .order-box {
+            border: 1px solid #dcdcdc;
+            /* Light gray border for each order */
+            padding: 15px;
+            /* Padding inside each order box */
+            border-radius: 8px;
+            /* Rounded corners */
+            background-color: #f9f9f9;
+            /* Light background color for the box */
+            transition: background-color 0.3s;
+            /* Smooth transition for hover effect */
+        }
 
-strong {
-    color: #333; /* Dark color for strong text */
-}
-.popular-title {
-    text-align: center; /* Center the title */
-    margin-bottom: 20px; /* Space below the title */
-}
+        .order-box:hover {
+            background-color: #f1f1f1;
+            /* Darker background on hover */
+        }
 
-.popular-items-container {
-    max-width: 1200px; /* Limit the width of the container */
-    margin: 20px 15%; /* Center the container */
-    padding: 20px; /* Add some padding */
-}
+        h2 {
+            font-size: 2em;
+            /* Main heading size */
+            text-align: center;
+            /* Center the main heading */
+            color: #ffffff;
+            /* Dark color for the main heading */
+            margin-bottom: 20px;
+            /* Space below the main heading */
+            margin-top: 20px;
+        }
 
-.popular-items {
-    display: grid; /* Use grid layout for items */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
-    gap: 20px; /* Space between items */
-}
+        h3 {
+            font-size: 1.5em;
+            /* Section heading size */
+            color: #ffffff;
+            /* Darker color for section headers */
+            margin-bottom: 15px;
+            /* Space below section headers */
+        }
 
-.item-box {
-    background-color: #f9f9f9; /* Light background for item boxes */
-    border: 1px solid #ddd; /* Border for item boxes */
-    border-radius: 8px; /* Rounded corners */
-    padding: 15px; /* Padding inside item boxes */
-    text-align: center; /* Center text */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.2s; /* Animation for hover effect */
-    display: flex; /* Use flexbox for alignment */
-    flex-direction: column; /* Align children vertically */
-    align-items: center; /* Center children horizontally */
-}
+        h4,
+        h5,
+        h6 {
+            margin: 5px 0;
+            /* Space around subheadings */
+            color: #555;
+            /* Slightly lighter color for subheadings */
+        }
 
-.item-box:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-}
+        p {
+            margin: 5px 0;
+            /* Space around paragraphs */
+            font-size: 1em;
+            /* Standard font size for text */
+            color: #666;
+            /* Gray color for text */
+        }
 
-.item-image {
-    max-width: 100%; /* Ensure image fits within the box */
-    height: 150px; /* Fixed height for images */
-    object-fit: cover; /* Crop to fit while maintaining aspect ratio */
-    border-radius: 5px; /* Slightly round the image corners */
-}
+        ul {
+            list-style-type: none;
+            /* Remove default bullet points */
+            padding: 0;
+            /* Remove padding */
+        }
 
-.item-name {
-    margin: 10px 0 5px; /* Margin around the item name */
-}
+        li {
+            margin: 10px 0;
+            /* Space between list items */
+            padding: 10px;
+            /* Padding inside each list item */
+            border: 1px solid #e0e0e0;
+            /* Light border for list items */
+            border-radius: 5px;
+            /* Rounded corners for list items */
+            background-color: #ffffff;
+            /* White background for list items */
+            transition: transform 0.2s;
+            /* Smooth transition for hover effect */
+        }
 
-.item-price {
-    margin: 0; /* No margin for the price */
-}
+        li:hover {
+            transform: scale(1.02);
+            /* Slightly enlarge list item on hover */
+        }
 
-.go-to-cart {
-    display: inline-block; /* Block for the link */
-    margin-top: 20px; /* Space above the link */
-    padding: 10px 20px; /* Padding for the link */
-    background-color: #28a745; /* Button background color */
-    color: white; /* Text color */
-    text-decoration: none; /* Remove underline */
-    border-radius: 5px; /* Round button corners */
-    text-align: center; /* Center text */
-}
+        strong {
+            color: #333;
+            /* Dark color for strong text */
+        }
 
-.go-to-cart:hover {
-    background-color: #218838; /* Darker shade on hover */
-}
-.offers-title {
-    text-align: center;
-    font-size: 2rem;
-}
+        .popular-title {
+            text-align: center;
+            /* Center the title */
+            margin-bottom: 20px;
+            /* Space below the title */
+        }
 
-.offers-container {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
-    justify-content: center; /* Center items horizontally */
-    max-width: 1200px; /* Limit the width of the container */
-    margin: 20px auto; /* Center the container */
-    padding: 20px; /* Add some padding */
-}
+        .popular-items-container {
+            max-width: 1200px;
+            /* Limit the width of the container */
+            margin: 20px 15%;
+            /* Center the container */
+            padding: 20px;
+            /* Add some padding */
+        }
 
-.offer-box {
-    background-color: #f8f9fa; /* Light background */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 15px; /* Inner spacing */
-    margin: 10px; /* Space between boxes */
-    width: 300px; /* Fixed width for each offer box */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.2s; /* Smooth scaling on hover */
-}
+        .popular-items {
+            display: grid;
+            /* Use grid layout for items */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            /* Responsive columns */
+            gap: 20px;
+            /* Space between items */
+        }
 
-.offer-box:hover {
-    transform: scale(1.05); /* Slightly scale up on hover */
-}
+        .item-box {
+            background-color: #eeefff;
+            /* Light background for item boxes */
+            border: 1px solid #ddd;
+            /* Border for item boxes */
+            border-radius: 8px;
+            /* Rounded corners */
+            padding: 15px;
+            /* Padding inside item boxes */
+            text-align: center;
+            /* Center text */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+            transition: transform 0.2s;
+            /* Animation for hover effect */
+            display: flex;
+            /* Use flexbox for alignment */
+            flex-direction: column;
+            /* Align children vertically */
+            align-items: center;
+            /* Center children horizontally */
+        }
 
-.offer-header {
-    text-align: left; /* Center text in the header */
-    margin-bottom: 10px; /* Space below the header */
-    font-size: 1.2rem; /* Font size for the header */
-}
+        .item-box:hover {
+            transform: translateY(-5px);
+            /* Lift effect on hover */
+        }
 
-/* Blinking Background Effect for Offers Text */
-.blinking-background {
-    display: inline-block; /* Inline block to apply width/height */
-    padding: 9px; /* Add padding for visual space */
-    border-radius: 50%; /* Rounded corners */
-    animation: blink 1s infinite; /* Blinking effect */
-}
+        .item-image {
+            max-width: 100%;
+            /* Ensure image fits within the box */
+            height: 150px;
+            /* Fixed height for images */
+            object-fit: cover;
+            /* Crop to fit while maintaining aspect ratio */
+            border-radius: 5px;
+            /* Slightly round the image corners */
+        }
 
-@keyframes blink {
-    0% {
-        background-color: rgb(255, 62, 229); /* Start with a light background */
-    }
-    50% {
-        background-color: rgba(255, 215, 0, 0); /* Fade to transparent */
-    }
-    100% {
-        background-color: rgb(255, 62, 229); /* End with a light background */
-    }
-}
+        .item-name {
+            margin: 10px 0 5px;
+            /* Margin around the item name */
+        }
 
-.offer-discount,
-.offer-type,
-.offer-validity {
-    margin: 5px 0; /* Margin between paragraphs */
-    font-size: 18px;
-    font-weight: bold;
-}
+        .item-price {
+            margin-bottom: 10px;
+            /* No margin for the price */
+        }
 
-.order-now-button {
-    display: inline-block;
-    padding: 10px 15px; /* Button padding */
-    background-color: #007bff; /* Button color */
-    color: white; /* Text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    text-decoration: none; /* No underline */
-    transition: background-color 0.3s; /* Smooth background color change */
-}
+        .go-to-cart {
+            display: inline-block;
+            /* Block for the link */
+            margin-top: 20px;
+            /* Space above the link */
+            padding: 10px 20px;
+            /* Padding for the link */
+            background-color: #919191;
+            /* Button background color */
+            color: white;
+            /* Text color */
+            text-decoration: none;
+            /* Remove underline */
+            border-radius: 5px;
+            /* Round button corners */
+            text-align: center;
+            /* Center text */
 
-.order-now-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-ul {
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    list-style-type: none; /* Remove bullet points */
-}
+        }
 
+        .go-to-cart:hover {
+            background-color: #4e4e4e;
+            /* Darker shade on hover */
+            transition: background-color 0.3s ease;
+        }
 
+        .offers-title {
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .offers-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap onto multiple lines */
+            justify-content: center;
+            /* Center items horizontally */
+            max-width: 1200px;
+            /* Limit the width of the container */
+            margin: 20px auto;
+            /* Center the container */
+            padding: 20px;
+            /* Add some padding */
+        }
+
+        .offer-box {
+            background-color: #f8f9fa;
+            /* Light background */
+            border: 1px solid #ccc;
+            /* Light border */
+            border-radius: 8px;
+            /* Rounded corners */
+            padding: 15px;
+            /* Inner spacing */
+            margin: 10px;
+            /* Space between boxes */
+            width: 300px;
+            /* Fixed width for each offer box */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+            transition: transform 0.2s;
+            /* Smooth scaling on hover */
+        }
+
+        .offer-box:hover {
+            transform: scale(1.05);
+            /* Slightly scale up on hover */
+        }
+
+        .offer-header {
+            text-align: left;
+            /* Center text in the header */
+            margin-bottom: 10px;
+            /* Space below the header */
+            font-size: 1.2rem;
+            /* Font size for the header */
+        }
+
+        /* Blinking Background Effect for Offers Text */
+        .blinking-background {
+            display: inline-block;
+            /* Inline block to apply width/height */
+            padding: 9px;
+            /* Add padding for visual space */
+            border-radius: 50%;
+            /* Rounded corners */
+            animation: blink 1s infinite;
+            /* Blinking effect */
+        }
+
+        @keyframes blink {
+            0% {
+                background-color: rgb(255, 62, 229);
+                /* Start with a light background */
+            }
+
+            50% {
+                background-color: rgba(255, 215, 0, 0);
+                /* Fade to transparent */
+            }
+
+            100% {
+                background-color: rgb(255, 62, 229);
+                /* End with a light background */
+            }
+        }
+
+        .offer-discount,
+        .offer-type,
+        .offer-validity {
+            margin: 5px 0;
+            /* Margin between paragraphs */
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .order-now-button {
+            display: inline-block;
+            padding: 10px 15px;
+            /* Button padding */
+            background-color: #007bff;
+            /* Button color */
+            color: white;
+            /* Text color */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            /* Rounded corners */
+            text-decoration: none;
+            /* No underline */
+            transition: background-color 0.3s;
+            /* Smooth background color change */
+        }
+
+        .order-now-button:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        ul {
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+            list-style-type: none;
+            /* Remove bullet points */
+        }
+
+        .reviews {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: white;
+            padding: 20px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Individual review box styling */
+        .review-box {
+            background-color: #848484;
+            border: 1px solid #e0e0e0;
+
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 280px;
+            transition: transform 0.2s ease;
+        }
+
+        .review-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Styling for name, order type, and review text */
+        .review-name {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: white !important;
+            /* Force color to white */
+        }
+
+        .order-type {
+            font-size: 0.95em;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 0.9em;
+            color: #ffffff;
+            line-height: 1.4em;
+        }
     </style>
 </head>
+
 <body>
+    <!-- EJS Structure -->
     <nav class="navbar">
         <div class="logo">Catering Craft</div>
         <ul class="nav-links">
@@ -384,188 +664,219 @@ ul {
             <li><a href="/user/thali/history">Thali-Orders</a></li>
             <li><a href="/user/orderhistory">Order History</a></li>
             <li><a href="/user/suggestorder">Suggest me Order</a></li>
+            <li><a href="/">Logout</a></li>
         </ul>
     </nav>
-    
+
+
     <div class="welcome-message">
-        <h1>Welcome back to Catering Craft, <%= userName %>!</h1>
-        <div class="typing-animation">
+        <h1>Welcome back to Catering Craft <%= userName %>
+        </h1>
+        <div class="typing-animation-container">
             <span id="static-text">Checkout Your </span>
             <span id="text"></span>
         </div>
     </div>
     <section class="cuisine-selection">
         <h2 class="section-title">Choose from Cuisines</h2>
-        
+
         <div class="cuisine-links">
             <a href="/user/displaycategory/jain" class="cuisine-box">
                 <img src="/static/cuisine/jainthali.webp" alt="Jain Cuisine">
                 <span class="cuisine-name">Jain</span>
             </a>
-            
+
             <a href="/user/displaycategory/chinese" class="cuisine-box">
                 <img src="/static/cuisine/chinesethali.avif" alt="Chinese Cuisine">
                 <span class="cuisine-name">Chinese</span>
             </a>
-            
+
             <a href="/user/displaycategory/punjabi" class="cuisine-box">
                 <img src="/static/cuisine/punjabithali.jpg" alt="Punjabi Cuisine">
                 <span class="cuisine-name">Punjabi</span>
             </a>
-            
+
             <a href="/user/displaycategory/southindian" class="cuisine-box">
                 <img src="/static/cuisine/southindanthali.jpg" alt="South Indian Cuisine">
                 <span class="cuisine-name">South Indian</span>
             </a>
-            
+
             <a href="/user/displaycategory/gujarati" class="cuisine-box">
                 <img src="/static/cuisine/gujaratithali.webp" alt="Gujarati Cuisine">
                 <span class="cuisine-name">Gujarati</span>
             </a>
-            
+
             <a href="/user/displaycategory/indian" class="cuisine-box">
                 <img src="/static/cuisine/indianthali.webp" alt="Indian Cuisine">
                 <span class="cuisine-name">Indian</span>
             </a>
-            
+
             <a href="/user/displaycategory/continental" class="cuisine-box">
                 <img src="/static/cuisine/continentalthali.webp" alt="Continental Cuisine">
                 <span class="cuisine-name">Continental</span>
             </a>
-            
+
         </div>
     </section>
-    
-    
+
+
     <h2>Order Our Thalis</h2>
     <div class="order-buttons">
         <a href="/user/thali/order" class="order-button">
             <img src="/static/tiffinlogo.jpg" alt="Tiffin" class="order-image">
-            <div class="order-name">Tiffin</div>
+            <div class="order-name">Thali</div>
         </a>
         <a href="/user/thali/tiffin" class="order-button">
             <img src="/static/thalilogo.jpg" alt="Thali" class="order-image">
-            <div class="order-name">Thali</div>
+            <div class="order-name">Tiffin</div>
         </a>
     </div>
-    
+
 
 
     <h2>Your Recent Orders</h2>
     <div class="orders">
         <div class="order-section">
             <h3>Recent Simple Orders</h3>
-            <% simpleOrders.forEach(order => { %>
+            <% simpleOrders.forEach(order=> { %>
                 <div class="order-box">
-                    <h4>Order ID: <%= order._id %></h4>
-                    <p><strong>Status:</strong> <%= order.status %></p>
-                    <p><strong>Total Bill:</strong> ₹<%= order.totalBill %></p>
-                    
+                    <h4>Order ID: <%= order._id %>
+                    </h4>
+                    <p><strong>Status:</strong>
+                        <%= order.status %>
+                    </p>
+                    <p><strong>Total Bill:</strong> ₹<%= order.totalBill %>
+                    </p>
+
                     <h5>Ordered Items:</h5>
                     <ul>
-                        <% order.items.forEach(item => { %>
+                        <% order.items.forEach(item=> { %>
                             <li>
-                                <h6><%= item.foodItem.name %></h6>
-                                <p><strong>Description:</strong> <%= item.foodItem.description %></p>
-                                <p><strong>Quantity:</strong> <%= item.quantity %></p>
-                                <p><strong>Price:</strong> ₹<%= item.foodItem.price %></p>
+                                <h6>
+                                    <%= item.foodItem.name %>
+                                </h6>
+                                <p><strong>Description:</strong>
+                                    <%= item.foodItem.description %>
+                                </p>
+                                <p><strong>Quantity:</strong>
+                                    <%= item.quantity %>
+                                </p>
+                                <p><strong>Price:</strong> ₹<%= item.foodItem.price %>
+                                </p>
                             </li>
-                        <% }) %>
+                            <% }) %>
                     </ul>
                 </div>
-            <% }) %>
+                <% }) %>
         </div>
-    
+
         <div class="order-section">
             <h3>Recent Thali Orders</h3>
-            <% thaliOrders.forEach(order => { %>
+            <% thaliOrders.forEach(order=> { %>
                 <div class="order-box">
-                    <p><strong>Order ID:</strong> <%= order._id %></p>
-                    <p><strong>Items:</strong> <%= order.items && order.items.length ? order.items.join(', ') : 'No items' %></p>
-                    <p><strong>Total:</strong> ₹<%= order.total %></p>
+                    <p><strong>Order ID:</strong>
+                        <%= order._id %>
+                    </p>
+                    <p><strong>Items:</strong>
+                        <%= order.items && order.items.length ? order.items.join(', ') : ' No items' %>
+                    </p>
+                    <p><strong>Total:</strong> ₹<%= order.total %>
+                    </p>
                 </div>
-            <% }) %>
+                <% }) %>
         </div>
     </div>
-    
+
 
 
     <h2 class="popular-title">Popular Food Items</h2>
     <div class="popular-items-container">
         <div class="popular-items">
-            <% popularItems.forEach(item => { %>
+            <% popularItems.forEach(item=> { %>
                 <div class="item-box">
-                    <h4 class="item-name"><%= item.name %></h4>
-                    <p class="item-price">Price: ₹<%= item.price %></p>
+                    <h4 class="item-name">
+                        <%= item.name %>
+                    </h4>
+                    <p class="item-price">Price: ₹<%= item.price %>
+                    </p>
                     <img class="item-image" src="<%= item.imageUrl %>" alt="<%= item.name %>">
                 </div>
-            <% }) %>
+                <% }) %>
         </div>
         <a href="/user/cart" class="go-to-cart">Go to Cart</a>
     </div>
-    
+
 
     <h2 class="offers-title">Offers</h2>
-<div class="offers-container">
-    <% offers.forEach(offer => { %>
-        <div class="offer-box">
-            <div class="offer-header">
-                <span class="blinking-background">Offers</span> <!-- Blinking effect applied here -->
+    <div class="offers-container">
+        <% offers.forEach(offer=> { %>
+            <div class="offer-box">
+                <div class="offer-header">
+                    <span class="blinking-background">Offers</span> <!-- Blinking effect applied here -->
+                </div>
+                <p class="offer-discount">Discount: <%= offer.discount %>%</p>
+                <p class="offer-type">Type: <%= offer.orderType %>
+                </p>
+                <p class="offer-validity">Valid From: <%= offer.startDate.toDateString() %> to <%=
+                            offer.endDate.toDateString() %>
+                </p>
             </div>
-            <p class="offer-discount">Discount: <%= offer.discount %>%</p>
-            <p class="offer-type">Type: <%= offer.orderType %></p>
-            <p class="offer-validity">Valid From: <%= offer.startDate.toDateString() %> to <%= offer.endDate.toDateString() %></p>
-        </div>
-    <% }) %>
-</div>
+            <% }) %>
+    </div>
 
-    
-    
+
+
 
     <h2>User Reviews</h2>
     <div class="reviews">
-        <% userReviews.forEach(review => { %>
+        <% userReviews.forEach(review=> { %>
             <div class="review-box">
-                <p><strong><%= review.name %></strong></p>
-                <p>Order Type: <%= review.orderType %></p>
-                <p>Review: <%= review.description %></p>
+                <p class="review-name" style="color: white;"><strong>
+                        <%= review.name %>
+                    </strong></p>
+                <p class="order-type">Order Type: <%= review.orderType %>
+                </p>
+                <p class="review-text">Review: <%= review.description %>
+                </p>
             </div>
-        <% }) %>
+            <% }) %>
     </div>
 
     <script>
         const textElement = document.getElementById('text');
-const phrases = ["Orders", "Thali", "Tiffins", "New Offers"];
-let currentPhraseIndex = 0;
-let currentCharIndex = 0;
-let isDeleting = false;
+        const phrases = ["Orders", "Thali", "Tiffins", "New Offers"];
+        let currentPhraseIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
 
-function type() {
-    const currentPhrase = phrases[currentPhraseIndex];
+        function type() {
+            const currentPhrase = phrases[currentPhraseIndex];
 
-    if (isDeleting) {
-        currentCharIndex--;
-    } else {
-        currentCharIndex++;
-    }
+            if (isDeleting) {
+                currentCharIndex--;
+            } else {
+                currentCharIndex++;
+            }
 
-    textElement.innerText = currentPhrase.substring(0, currentCharIndex);
+            textElement.innerText = currentPhrase.substring(0, currentCharIndex);
 
-    // If the whole phrase is displayed
-    if (currentCharIndex === currentPhrase.length) {
-        isDeleting = true; // Start deleting after a pause
-        setTimeout(type, 1500); // Pause before starting to delete
-    } else if (isDeleting && currentCharIndex === 0) {
-        isDeleting = false; // Switch to the next phrase
-        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length; // Loop through phrases
-        setTimeout(type, 500); // Pause before starting to type
-    } else {
-        setTimeout(type, isDeleting ? 75 : 150); // Speed of typing and deleting
-    }
-}
+            // If the whole phrase is displayed
+            if (currentCharIndex === currentPhrase.length) {
+                isDeleting = true; // Start deleting after a pause
+                setTimeout(type, 1500); // Pause before starting to delete
+            } else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false; // Switch to the next phrase
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length; // Loop through phrases
+                setTimeout(type, 500); // Pause before starting to type
+            } else {
+                setTimeout(type, isDeleting ? 75 : 150); // Speed of typing and deleting
+            }
+        }
 
-type(); // Start the typing effect
+        type(); // Start the typing effect
+
 
     </script>
 </body>
+
 </html>

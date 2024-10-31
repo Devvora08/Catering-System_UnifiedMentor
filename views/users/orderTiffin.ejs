@@ -1,70 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Order Tiffin</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a0a0a;
+            /* Near black background */
+            color: #ffffff;
+            /* White text for contrast */
+            margin: 0;
+            transition: background-color 0.5s, color 0.5s;
+            /* Smooth transition for background and text color */
+        }
+
+        h1 {
+            color: #007bff;
+            /* Primary blue color */
+            text-align: center;
+            transition: color 0.5s;
+            /* Smooth transition for heading color */
+        }
+
+        /* Alert Message */
+        .alert-message {
+            background-color: #dc3545;
+            /* Danger color */
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: background-color 0.5s;
+            /* Smooth transition for background color */
+        }
+
+        /* Thali Container */
+        .thali-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap onto the next row */
+            justify-content: space-between;
+            /* Space between items */
+            margin-bottom: 20px;
+            /* Additional spacing below the container */
+        }
+
+        /* Thali Item Styles */
+        .thali-item {
+            background-color: #1c1c1c;
+            /* Darker background for items (near black) */
+            border: 1px solid #0f2b44;
+            /* Dark border */
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            /* Stronger shadow for depth */
+            flex: 1 1 calc(30% - 20px);
+            /* Allow 3 items per row with some spacing */
+            max-width: calc(30% - 20px);
+            /* Set maximum width for thali items */
+            transition: transform 0.5s, box-shadow 0.5s;
+            /* Transition for hover effects */
+        }
+
+        .thali-item:hover {
+            transform: translateY(-5px);
+            /* Lift effect on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+            /* Enhance shadow on hover */
+        }
+
+        /* Thali Name and Price Styles */
+        .thali-name {
+            color: #b8e0f0;
+            /* Lighter shade of blue for thali names */
+            margin-bottom: 10px;
+            /* Spacing between name and price */
+            transition: color 0.5s;
+            /* Smooth transition for thali name color */
+        }
+
+        .thali-price {
+            color: #58a4b0;
+            /* Lighter greenish-blue for price */
+            margin-bottom: 15px;
+            /* Spacing below price */
+        }
+
+        /* Control Buttons */
+        .quantity-control,
+        .duration-control {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        /* Button Styles */
+        .quantity-btn {
+            background-color: #007bff;
+            /* Primary blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            /* Adjusted padding for smaller buttons */
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+            /* Transition for button background */
+        }
+
+        .quantity-btn:hover {
+            background-color: #0056b3;
+            /* Darker shade on hover */
+        }
+
+        /* Input Styles */
+        .quantity-input,
+        .duration-input {
+            width: 50px;
+            /* Adjusted width for input fields */
+            text-align: center;
+            border: 1px solid #ced4da;
+            /* Light border */
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        /* Form Button */
+        .add-to-cart-btn {
+            background-color: #28a745;
+            /* Success color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            /* Adjusted padding for smaller button */
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+            /* Changed to inline-block for smaller width */
+            text-align: center;
+            transition: background-color 0.5s;
+            /* Transition for button background */
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+            /* Darker shade on hover */
+        }
+
+        /* Home Button */
+        .go-home-btn {
+            background-color: #002e63;
+            /* Primary blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 12px;
+            /* Adjusted padding for smaller button */
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 10vh;
+            display: inline-block;
+            /* Changed to inline-block for smaller width */
+            position: relative;
+            left: 45%;
+            text-align: center;
+            transition: background-color 0.5s;
+            /* Transition for button background */
+        }
+
+        .go-home-btn:hover {
+            background-color: #011f41;
+            /* Darker shade on hover */
+        }
+
+        /* Overall Form Styling */
+        form {
+            max-width: 800px;
+            /* Limit the form width */
+            margin: 0 auto;
+            /* Center the form */
+            transition: all 0.5s;
+            /* Transition for all form elements */
+        }
+
+        /* Add on load transition */
+        .thali-item {
+            opacity: 0;
+            /* Start with invisible items */
+            transform: translateY(20px);
+            /* Start slightly below */
+            animation: fadeInUp 0.5s forwards;
+            /* Use animation for loading effect */
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                /* Fade in */
+                transform: translateY(0);
+                /* Move to original position */
+            }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #001014;
+            /* Dark background */
+            padding: 15px 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Logo Styling */
+        .logo {
+            font-size: 2em;
+            /* Larger logo font size */
+            color: #4dd0e1;
+            /* Light cyan color */
+            font-weight: bold;
+        }
+
+        /* Navigation Links Styling */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            /* Space between links */
+            margin: 0;
+        }
+
+        /* Individual Link Styling */
+        .nav-links li {
+            position: relative;
+            /* For pseudo-element positioning */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cce8ea;
+            /* Light color for links */
+            font-size: 1.1em;
+            transition: color 0.3s, transform 0.3s;
+            /* Transition for color and scaling */
+        }
+
+        /* Hover Effects for Links */
+        .nav-links a:hover {
+            color: #ffffff;
+            /* Change to white on hover */
+            transform: scale(1.1);
+            /* Slightly enlarge on hover */
+        }
+
+        /* Optional: Add a bottom border to links */
+        .nav-links a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: transparent;
+            /* Initial transparent color */
+            transition: background 0.3s;
+            /* Transition for underline effect */
+        }
+
+        .nav-links a:hover::after {
+            background: #4dd0e1;
+            /* Color on hover */
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Order Tiffin</h1>
+    <nav class="navbar">
+        <div class="logo">Catering Craft</div>
+        <ul class="nav-links">
+            <li><a href="/user/order">Order</a></li>
+            <li><a href="/user/cart">Food Cart</a></li>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="/user/thali/history">Thali-Orders</a></li>
+            <li><a href="/user/orderhistory">Order History</a></li>
+            <li><a href="/user/suggestorder">Suggest me Order</a></li>
+            <li><a href="/user/home">Home</a></li>
+        </ul>
+    </nav>
+    <h1 id="thali-title">Order Tiffin</h1>
 
     <% if (!isTiffinSubscriber) { %>
         <!-- Message if not a tiffin subscriber -->
-        <div style="color: red; font-weight: bold; padding: 10px;">
+        <div class="alert-message">
             You need to be a Tiffin Subscriber to place a tiffin order.
             <a href="/user/profile">Go to Personal Details</a> to enable Tiffin Subscription.
         </div>
-    <% } else { %>
-        <!-- Display tiffin options for subscribers -->
-        <form action="/user/tiffin/order" method="POST">
-            <% thalis.forEach(thali => { %>
-                <div class="thali-item">
-                    <h3><%= thali.name %></h3>
-                    <p>Total Price: <%= thali.totalPrice %></p>
-                    
-                    <button type="button" onclick="decrement('<%= thali._id %>')">-</button>
-                    <input type="number" name="quantity-<%= thali._id %>" id="quantity-<%= thali._id %>" value="50" min="50">
-                    <button type="button" onclick="increment('<%= thali._id %>')">+</button>
-        
-                    <button type="button" onclick="decrementDuration('<%= thali._id %>')">-</button>
-                    <input type="number" name="duration-<%= thali._id %>" id="duration-<%= thali._id %>" value="1" min="1">
-                    <button type="button" onclick="incrementDuration('<%= thali._id %>')">+</button>
-                    
-                    <input type="hidden" name="thaliId" value="<%= thali._id %>"> <!-- Hidden field for thaliId -->
+        <% } else { %>
+            <!-- Display tiffin options for subscribers -->
+            <!-- Display tiffin options for subscribers -->
+            <form action="/user/tiffin/order" method="POST">
+                <div class="thali-container"> <!-- New container for thali items -->
+                    <% thalis.forEach(thali=> { %>
+                        <div class="thali-item">
+                            <h3 class="thali-name">
+                                <%= thali.name %>
+                            </h3>
+                            <p class="thali-price">Total Price: <%= thali.totalPrice %>
+                            </p>
+
+                            <div class="quantity-control">
+                                <button type="button" class="quantity-btn"
+                                    onclick="decrementQuantity('<%= thali._id %>')">-</button>
+                                <input type="number" class="quantity-input" name="quantity-<%= thali._id %>"
+                                    id="quantity-<%= thali._id %>" value="50" min="50">
+                                <button type="button" class="quantity-btn"
+                                    onclick="incrementQuantity('<%= thali._id %>')">+</button>
+                            </div>
+
+                            <div class="duration-control">
+                                <button type="button" class="quantity-btn"
+                                    onclick="decrementDuration('<%= thali._id %>')">-</button>
+                                <input type="number" class="duration-input" name="duration-<%= thali._id %>"
+                                    id="duration-<%= thali._id %>" value="1" min="1">
+                                <button type="button" class="quantity-btn"
+                                    onclick="incrementDuration('<%= thali._id %>')">+</button>
+                            </div>
+
+                            <input type="hidden" name="thaliId" value="<%= thali._id %>">
+                            <!-- Hidden field for thaliId -->
+                        </div>
+                        <% }) %>
                 </div>
-            <% }) %>
-        
-            <button type="submit">Add Tiffin Order</button>
-        </form>
-        
-    <% } %>
 
-    <button onclick="window.location.href='/user/home'">Go to Home</button>
+                <button type="submit" class="add-to-cart-btn">Add Tiffin Order</button>
+            </form>
 
-    <script>
-        function incrementQuantity(id) {
-            const quantityInput = document.getElementById(`quantity-${id}`);
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-        }
-    
-        function decrementQuantity(id) {
-            const quantityInput = document.getElementById(`quantity-${id}`);
-            if (quantityInput.value > 50) {
-                quantityInput.value = parseInt(quantityInput.value) - 1;
-            }
-        }
-    
-        function incrementDuration(id) {
-            const durationInput = document.getElementById(`duration-${id}`);
-            durationInput.value = parseInt(durationInput.value) + 1;
-        }
-    
-        function decrementDuration(id) {
-            const durationInput = document.getElementById(`duration-${id}`);
-            if (durationInput.value > 1) { // Ensure minimum duration is 1
-                durationInput.value = parseInt(durationInput.value) - 1;
-            }
-        }
-    </script>
+            <% } %>
+
+                <button class="go-home-btn" onclick="window.location.href='/user/home'">Go to Home</button>
+
+                <script>
+                    function incrementQuantity(id) {
+                        const quantityInput = document.getElementById(`quantity-${id}`);
+                        quantityInput.value = parseInt(quantityInput.value) + 1;
+                    }
+
+                    function decrementQuantity(id) {
+                        const quantityInput = document.getElementById(`quantity-${id}`);
+                        if (quantityInput.value > 50) {
+                            quantityInput.value = parseInt(quantityInput.value) - 1;
+                        }
+                    }
+
+                    function incrementDuration(id) {
+                        const durationInput = document.getElementById(`duration-${id}`);
+                        durationInput.value = parseInt(durationInput.value) + 1;
+                    }
+
+                    function decrementDuration(id) {
+                        const durationInput = document.getElementById(`duration-${id}`);
+                        if (durationInput.value > 1) { // Ensure minimum duration is 1
+                            durationInput.value = parseInt(durationInput.value) - 1;
+                        }
+                    }
+                </script>
 
 </body>
+
 </html>

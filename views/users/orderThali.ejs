@@ -1,43 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Thali</title>
-</head>
-<body>
-    <h1>Order Thali</h1>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle, #001820 20%, #000c10 100%);
+            color: #cce8ea;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-    <form action="/user/thali/order" method="POST">
-        <% thalis.forEach(thali => { %>
-            <div class="thali-item">
-                <h2><%= thali.name %></h2>
-                <img src="<%= thali.imageUrl %>" alt="<%= thali.name %>">
-                <p><%= thali.description %></p>
-                <p>Price: ₹<%= thali.totalPrice %></p>
-    
-                <!-- Display the list of items in the thali -->
-                <h3>Items in this Thali:</h3>
-                <ul>
-                    <% thali.items.forEach(item => { %>
-                        <li>
-                            <strong><%= item.foodItemId.name %></strong>: 
-                            Quantity: <%= item.quantity %>, Price: ₹<%= item.price/10 %>
-                        </li>
-                    <% }) %>
-                </ul>
-    
-                <div class="quantity-control">
-                    <button type="button" class="decrement" onclick="decrementQuantity('<%= thali._id %>')">-</button>
-                    <input type="number" name="quantity-<%= thali._id %>" id="quantity-<%= thali._id %>" value="1" min="1" required>
-                    <button type="button" class="increment" onclick="incrementQuantity('<%= thali._id %>')">+</button>
+        /* Main Title */
+        #thali-title {
+            font-size: 2.5em;
+            color: #ffffff;
+            /* Change to white */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Thali Order Form */
+        #thali-order-form {
+            max-width: 1200px;
+            /* Increased max-width for more space */
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Thali Item Container */
+        .thali-item {
+            background-color: #001014;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+            width: calc(33.33% - 20px);
+            /* Adjusted width for 3 items per row */
+            margin-bottom: 20px;
+            opacity: 0;
+            /* Initially hidden for animation */
+            transform: translateY(20px);
+            /* Initial position for animation */
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            animation: fadeInSlideUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Thali Name */
+        .thali-name {
+            font-size: 1.8em;
+            color: #ffffff;
+            /* Change to white */
+            margin-bottom: 10px;
+        }
+
+        /* Thali Image */
+        .thali-image-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .thali-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #004d5b;
+        }
+
+        /* Thali Description and Price */
+        .thali-description {
+            font-size: 1em;
+            color: #ffffff;
+            /* Change to white */
+            margin-bottom: 8px;
+        }
+
+        .thali-price {
+            font-size: 1.1em;
+            color: #4dd0e1;
+            /* Keep as is for emphasis */
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Thali Items List */
+        .thali-items-list {
+            margin-top: 15px;
+        }
+
+        .thali-items-title {
+            font-size: 1.3em;
+            color: #ffffff;
+            /* Change to white */
+            margin-bottom: 10px;
+        }
+
+        .thali-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .thali-item-entry {
+            color: #a6dbdd;
+            padding: 5px 0;
+            border-bottom: 1px solid #002d32;
+        }
+
+        /* Quantity Control */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .quantity-btn {
+            background-color: #004d5b;
+            color: #b2ebf2;
+            border: none;
+            padding: 8px 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #002e37;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #cce8ea;
+            background-color: #002328;
+            border: 1px solid #00454e;
+            border-radius: 5px;
+            margin: 0 10px;
+            padding: 5px;
+        }
+
+        /* Add to Cart Button */
+        .add-to-cart-btn {
+            background-color: #006d7a;
+            color: #ffffff;
+            /* Change to white */
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #004d5b;
+            color: #d0f4f7;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #001014;
+            /* Dark background */
+            padding: 15px 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Logo Styling */
+        .logo {
+            font-size: 2em;
+            /* Larger logo font size */
+            color: #4dd0e1;
+            /* Light cyan color */
+            font-weight: bold;
+        }
+
+        /* Navigation Links Styling */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            /* Space between links */
+            margin: 0;
+        }
+
+        /* Individual Link Styling */
+        .nav-links li {
+            position: relative;
+            /* For pseudo-element positioning */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cce8ea;
+            /* Light color for links */
+            font-size: 1.1em;
+            transition: color 0.3s, transform 0.3s;
+            /* Transition for color and scaling */
+        }
+
+        /* Hover Effects for Links */
+        .nav-links a:hover {
+            color: #ffffff;
+            /* Change to white on hover */
+            transform: scale(1.1);
+            /* Slightly enlarge on hover */
+        }
+
+        /* Optional: Add a bottom border to links */
+        .nav-links a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: transparent;
+            /* Initial transparent color */
+            transition: background 0.3s;
+            /* Transition for underline effect */
+        }
+
+        .nav-links a:hover::after {
+            background: #4dd0e1;
+            /* Color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Catering Craft</div>
+        <ul class="nav-links">
+            <li><a href="/user/order">Order</a></li>
+            <li><a href="/user/cart">Food Cart</a></li>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="/user/thali/history">Thali-Orders</a></li>
+            <li><a href="/user/orderhistory">Order History</a></li>
+            <li><a href="/user/suggestorder">Suggest me Order</a></li>
+            <li><a href="/user/home">Home</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1 id="thali-title">Order Our Thali</h1>
+    </header>
+
+    <form action="/user/thali/order" method="POST" id="thali-order-form">
+        <% thalis.forEach(thali=> { %>
+            <div class="thali-item" id="thali-<%= thali._id %>">
+                <h2 class="thali-name">
+                    <%= thali.name %>
+                </h2>
+                <p class="thali-description">
+                    <%= thali.description %>
+                </p>
+                <p class="thali-price">Price: ₹<span>
+                        <%= thali.totalPrice %>
+                    </span></p>
+
+                <div class="thali-items-list">
+                    <h3 class="thali-items-title">Items in this Thali:</h3>
+                    <ul class="thali-items">
+                        <% thali.items.forEach(item=> { %>
+                            <li class="thali-item-entry">
+                                <span class="item-name"><strong>
+                                        <%= item.foodItemId.name %>
+                                    </strong></span> -
+                                <span class="item-quantity">Quantity: <%= item.quantity %></span>,
+                                <span class="item-price">Price: ₹<%= item.price / 10 %></span>
+                            </li>
+                            <% }) %>
+                    </ul>
                 </div>
-    
-                <button type="submit" name="thaliId" value="<%= thali._id %>">Add</button>
+
+                <div class="quantity-control">
+                    <button type="button" class="quantity-btn decrement"
+                        onclick="decrementQuantity('<%= thali._id %>')">-</button>
+                    <input type="number" name="quantity-<%= thali._id %>" id="quantity-<%= thali._id %>" value="1"
+                        min="1" required class="quantity-input">
+                    <button type="button" class="quantity-btn increment"
+                        onclick="incrementQuantity('<%= thali._id %>')">+</button>
+                </div>
+
+                <button type="submit" name="thaliId" value="<%= thali._id %>" class="add-to-cart-btn">Add to
+                    Cart</button>
             </div>
-        <% }) %>
+            <% }) %>
     </form>
-    
 
     <script>
         function decrementQuantity(thaliId) {
@@ -54,4 +328,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -5,17 +5,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Home - Catering Craft</title>
     <style>
-        /* Basic styles for feedback section */
-        .feedback-container {
+        /* Basic Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #eaeaea;
+        }
+
+        /* Navbar Styling */
+        nav {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        nav h1, nav a {
+            font-size: 24px;
+            margin: 0;
+            color: #b3d4ff;
+        }
+        nav h1 {
+            text-align: center;
+            font-weight: bold;
+            flex: 1;
+        }
+        nav a {
+            margin: 0 15px;
+            text-align: center;
+            border-radius: 5px;
+            margin-right: 5%;
+            text-decoration: none;
+        }
+        nav a:hover {
+            color: #73ff00;
+        }
+
+        /* Section Styling */
+        section {
+            position: relative;
+            padding: 40px 20px;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            text-align: center;
+            color: #fff;
+        }
+        section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            color: #ffcc00;
+            z-index: 2;
+        }
+        hr {
+            width: 80%;
+            margin: 30px auto;
+            border: 0;
+            height: 2px;
+            background: #333;
+        }
+
+        /* Specific Background Images */
+        .order-management { background-image: url("/static/teampaper/teamwallpaper1.jpg"); }
+        .customer-feedback { background-image: url("/static/teampaper/teamwallpaper2.avif"); }
+        .admin-notification { background-image: url("/static/teampaper/teamwallpaper3.jpg"); }
+        .offers { background-image: url("/static/teampaper/teamwallpaper4.jpg"); }
+        .team-members { background-image: url("/static/teampaper/teamwallpaper5.avif"); }
+
+        /* Container Box for Each Section */
+        .container-box {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            justify-content: center;
+            gap: 20px;
+            max-width: 900px;
+            z-index: 2;
         }
-        .feedback-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 200px;
-            background-color: #f9f9f9;
+        .info-box {
+            background: rgba(30, 30, 30, 0.85);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 250px;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: #eaeaea;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #ffcc00;
+        }
+        .info-box p {
+            font-size: 16px;
+        }
+
+        /* Forms and Inputs */
+        form label {
+            display: block;
+            margin-top: 10px;
+            color: #ccc;
+        }
+        form input, form select, form button {
+            width: 90%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+        }
+        form button {
+            cursor: pointer;
+            background-color: #555;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -23,110 +148,113 @@
 
     <!-- Navbar -->
     <nav>
-        <div>
-            <h1>Catering Craft</h1>
-        </div>
-        <div>
-            <a href="/team/messages">Notify</a>
-        </div>
+        <h1>Catering Craft</h1>
+        <a href="/team/messages">Notify</a>
+        <a href="/">Logout</a>
     </nav>
 
+    <hr>
+
     <!-- Order Management Section -->
-    <section>
+    <section class="order-management">
         <h2>Order Management</h2>
-        <div class="order-boxes">
-            <!-- Simple Order Box -->
-            <div>
+        <div class="container-box">
+            <div class="info-box">
                 <h3>Last Simple Order</h3>
-                <p>
-                    <%= lastSimpleOrder ? `Order ID: ${lastSimpleOrder._id} - Total: Rs.${lastSimpleOrder.totalBill}` : "No simple orders yet" %>
-                </p>
+                <p><%= lastSimpleOrder ? `----Order ID: ${lastSimpleOrder._id}---- Total: Rs.${lastSimpleOrder.totalBill}` : "No simple orders yet" %></p>
             </div>
-
-            <!-- Thali Order Box -->
-            <div>
+            <div class="info-box">
                 <h3>Last Thali Order</h3>
-                <p>
-                    <%= lastThaliOrder ? `Order ID: ${lastThaliOrder._id} - Total: Rs.${lastThaliOrder.total}` : "No thali orders yet" %>
-                </p>
+                <p><%= lastThaliOrder ? `----Order ID: ${lastThaliOrder._id}----- Total: Rs.${lastThaliOrder.total}` : "No thali orders yet" %></p>
             </div>
-
-            <!-- Tiffin Order Box -->
-            <div>
+            <div class="info-box">
                 <h3>Last Tiffin Order</h3>
-                <p>
-                    <%= lastTiffinOrder ? `Order ID: ${lastTiffinOrder._id} - Total: Rs.${lastTiffinOrder.total}` : "No tiffin orders yet" %>
-                </p>
+                <p><%= lastTiffinOrder ? `----Order ID: ${lastTiffinOrder._id}---- Total: Rs.${lastTiffinOrder.total}` : "No tiffin orders yet" %></p>
             </div>
         </div>
     </section>
 
+    <hr>
+
     <!-- Customer Feedback Section -->
-    <section>
+    <section class="customer-feedback">
         <h2>Customer Feedback</h2>
-        <div class="feedback-container">
+        <div class="container-box">
             <% if (customerFeedback.length > 0) { %>
                 <% customerFeedback.forEach(feedback => { %>
-                    <div class="feedback-box">
+                    <div class="info-box">
                         <h3><%= feedback.name %></h3>
                         <p><strong>Order Type:</strong> <%= feedback.orderType %></p>
                         <p><strong>Feedback:</strong> <%= feedback.description %></p>
                     </div>
                 <% }) %>
             <% } else { %>
-                <p>No feedback available</p>
+                <div class="info-box">
+                    <p>No feedback available</p>
+                </div>
             <% } %>
         </div>
     </section>
+
+    <hr>
+
     <!-- Notification Section -->
-    <section>
+    <section class="admin-notification">
         <h2>Last Admin Notification</h2>
-        <div class="notification-box">
-            <p><%= lastAdminNotification ? lastAdminNotification.content : "No notifications yet" %></p>
+        <div class="container-box">
+            <div class="info-box">
+                <p><%= lastAdminNotification ? lastAdminNotification.content : "No notifications yet" %></p>
+            </div>
         </div>
     </section>
+
+    <hr>
 
     <!-- Offers Box Section -->
-    <section>
+    <section class="offers">
         <h2>Offers</h2>
-        <form action="/team/create-offer" method="POST">
-            <!-- Offer Discount Percentage -->
-            <label for="discount">Offer Cut (%)</label>
-            <input type="number" name="discount" id="discount" required>
+        <div class="container-box">
+            <div class="info-box">
+                <form action="/team/create-offer" method="POST">
+                    <label for="discount">Offer Cut (%)</label>
+                    <input type="number" name="discount" id="discount" required>
 
-            <!-- Offer Type (Thali or Tiffin) -->
-            <label for="orderType">Order Type</label>
-            <select name="orderType" id="orderType" required>
-                <option value="thali">Thali Orders</option>
-                <option value="tiffin">Tiffin Orders</option>
-                <option value="regular">Regular Orders</option>
-            </select>
+                    <label for="orderType">Order Type</label>
+                    <select name="orderType" id="orderType" required>
+                        <option value="thali">Thali Orders</option>
+                        <option value="tiffin">Tiffin Orders</option>
+                        <option value="regular">Regular Orders</option>
+                    </select>
 
-            <!-- Offer Date Range -->
-            <label for="startDate">Start Date</label>
-            <input type="date" name="startDate" id="startDate" required>
+                    <label for="startDate">Start Date</label>
+                    <input type="date" name="startDate" id="startDate" required>
 
-            <label for="endDate">End Date</label>
-            <input type="date" name="endDate" id="endDate" required>
+                    <label for="endDate">End Date</label>
+                    <input type="date" name="endDate" id="endDate" required>
 
-            <!-- Submit Button -->
-            <button type="submit">Create Offer</button>
-        </form>
-    </section>
-
-    <!-- Team Members Section -->
-    <section>
-        <h2>Team Members</h2>
-        <div class="team-members">
-            <% teamMembers.forEach(member => { %>
-                <p>
-                    <strong>Name:</strong> <%= member.name %> <br>
-                    <strong>Email:</strong> <%= member.email %> <br>
-                    <strong>Role:</strong> <%= member.role %>
-                </p>
-            <% }) %>
+                    <button type="submit">Create Offer</button>
+                </form>
+            </div>
         </div>
     </section>
+
+    <hr>
+
+    <!-- Team Members Section -->
+    <section class="team-members">
+        <h2>Team Members</h2>
+        <div class="container-box">
+            <% teamMembers.forEach(member => { %>
+                <div class="info-box">
+                    <p>
+                        <strong>Name:</strong> <%= member.name %> <br>
+                        <strong>Email:</strong> <%= member.email %> <br>
+                        <strong>Role:</strong> <%= member.role %>
+                    </p>
+                </div>
+            <% }) %>
+        </div>
+    </section><hr>
 
 </body>
 </html>

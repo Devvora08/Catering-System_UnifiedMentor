@@ -1,33 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Category | Cuisine</title>
+    <style>
+        /* Base Styling */
+        body {
+            background-color: #161320;
+            /* Darker purplish-black background */
+            color: #dcd6f7;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Title Styling */
+        #menu-title {
+            text-align: center;
+            font-size: 4.5rem;
+            color: #f7f7f7;
+            margin: 20px 0;
+            transition: color 0.3s ease;
+        }
+
+        #menu-title:hover {
+            color: #e1d9f1;
+        }
+
+        /* Food List Styling */
+        #food-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+            list-style: none;
+        }
+
+        /* Food Item Card */
+        .food-item {
+            background-color: #1c1827;
+            /* Darker tone for card background */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 400px;
+            /* Ensures consistent box height */
+        }
+
+        .food-item:hover {
+            transform: translateY(-8px);
+            background-color: #302743;
+        }
+
+        /* Food Item Text */
+        .food-name {
+            font-size: 1.5rem;
+            color: #e9e4f0;
+            margin: 10px 0;
+        }
+
+        .food-description {
+            font-size: 0.9rem;
+            color: #b8a1d9;
+            margin: 5px 0 15px;
+        }
+
+        .food-price {
+            font-weight: bold;
+            color: #d4b0ff;
+            font-size: 1rem;
+        }
+
+        /* Image Styling */
+        .food-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            /* Ensures the image fills the designated area without distortion */
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .food-item:hover .food-image {
+            transform: scale(1.05);
+        }
+
+        /* Quantity Selector */
+        .quantity-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-button {
+            background-color: #4c3064;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .quantity-button:hover {
+            background-color: #664680;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            font-size: 1rem;
+            background-color: #2e2540;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        /* Add to Cart Button */
+        .add-to-cart-button {
+            background-color: #5d3a7e;
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            font-size: 1rem;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #735295;
+            transform: scale(1.05);
+        }
+
+        /* Smooth Load-in Animation */
+        .food-item {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Navbar Container */
+.cuisine-navbar {
+    background-color: #1b1b1b; /* Dark blackish tone */
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-bottom: 2px solid #333;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Navbar Links */
+.cuisine-link {
+    color: #ccc;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.cuisine-link:hover {
+    background-color: #333;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Active Link Style */
+.cuisine-link:active {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+    </style>
 </head>
+
 <body>
-    <h1><%= categoryId %> Menu</h1>
-    <ul>
-        <% foodItems.forEach(item => { %>
-            <li>
-                <h3><%= item.name %></h3>
-                <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
-                <p><%= item.description %></p>
-                <p>Price: <%= item.price %> Rs</p>
-                
-                <form action="/user/cart/add" method="POST" style="display: inline;">
-                    <div style="display: flex; align-items: center;">
-                        <button type="button" onclick="decrementQuantity('<%= item._id %>')">-</button>
-                        <input type="number" id="quantity-<%= item._id %>" name="quantity" value="1" min="1" style="width: 40px; text-align: center;" readonly>
-                        <button type="button" onclick="incrementQuantity('<%= item._id %>')">+</button>
+    <nav class="cuisine-navbar">
+        <a href="/user/displaycategory/jain" class="cuisine-link">Jain</a>
+        <a href="/user/displaycategory/chinese" class="cuisine-link">Chinese</a>
+        <a href="/user/displaycategory/punjabi" class="cuisine-link">Punjabi</a>
+        <a href="/user/displaycategory/southindian" class="cuisine-link">South Indian</a>
+        <a href="/user/displaycategory/gujarati" class="cuisine-link">Gujarati</a>
+        <a href="/user/displaycategory/indian" class="cuisine-link">Indian</a>
+        <a href="/user/displaycategory/continental" class="cuisine-link">Continental</a>
+        <a href="/user/home" class="cuisine-link">Home</a>
+    </nav>
+    <h1 id="menu-title">
+        <%= categoryId.charAt(0).toUpperCase() + categoryId.slice(1) %>
+    </h1>
+    
+    <ul id="food-list">
+        <% foodItems.forEach(item=> { %>
+            <li class="food-item">
+                <h3 class="food-name">
+                    <%= item.name %>
+                </h3>
+                <img src="<%= item.imageUrl %>" alt="<%= item.name %>" class="food-image">
+                <p class="food-description">
+                    <%= item.description %>
+                </p>
+                <p class="food-price">Price: <%= item.price %> Rs</p>
+
+                <form action="/user/cart/add" method="POST" class="add-to-cart-form">
+                    <div class="quantity-selector">
+                        <button type="button" class="quantity-button decrement"
+                            onclick="decrementQuantity('<%= item._id %>')">-</button>
+                        <input type="number" id="quantity-<%= item._id %>" name="quantity" value="1" min="1"
+                            class="quantity-input" readonly>
+                        <button type="button" class="quantity-button increment"
+                            onclick="incrementQuantity('<%= item._id %>')">+</button>
                     </div>
                     <input type="hidden" name="itemId" value="<%= item._id %>">
-                    <input type="hidden" name="categoryId" value="<%= categoryId %>"> <!-- Add this line -->
-                    <button type="submit">Add to Cart</button>
+                    <input type="hidden" name="categoryId" value="<%= categoryId %>">
+                    <button type="submit" class="add-to-cart-button">Add to Cart</button>
                 </form>
-                
             </li>
-        <% }) %>
+            <% }) %>
     </ul>
 
     <script>
@@ -35,13 +242,14 @@
             const quantityInput = document.getElementById(`quantity-${itemId}`);
             quantityInput.value = parseInt(quantityInput.value) + 1;
         }
-    
+
         function decrementQuantity(itemId) {
             const quantityInput = document.getElementById(`quantity-${itemId}`);
-            if (parseInt(quantityInput.value) > 0) {
+            if (parseInt(quantityInput.value) > 1) {
                 quantityInput.value = parseInt(quantityInput.value) - 1;
             }
         }
     </script>
 </body>
+
 </html>

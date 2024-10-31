@@ -5,83 +5,269 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
+}
+
+/* Navbar styles */
+.navbar {
+            background: linear-gradient(135deg, #000000, #232323);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.5s ease;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin-right: 20px;
+        }
+
+        .nav-links a:hover {
+            color: #383838; /* A nice highlight color on hover */
+        }
+        .logo {
+    font-size: 35px; /* Logo font size */
+    color: #ffffff; /* White color for logo */
+    font-weight: bold; /* Logo weight */
+    margin-left: 5%;
+}
+
+/* Cart container styles */
+.cart-container {
+    max-width: 600px; /* Center container */
+    margin: 20px auto; /* Center horizontally */
+    background-color: #1e1e1e; /* Dark background for cart */
+    padding: 20px; /* Spacing within the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* On-load transition */
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Start slightly above */
+}
+
+/* Title styles */
+.cart-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Order details styles */
+.order-details {
+    margin-bottom: 20px;
+}
+
+/* Cart items styles */
+.cart-items {
+    list-style-type: none; /* Remove default list styling */
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    background-color: #2c2c2c; /* Slightly lighter for item background */
+    margin-bottom: 10px; /* Space between items */
+    padding: 15px; /* Increased space within each item */
+    border-radius: 4px; /* Rounded corners */
+    display: flex;
+    justify-content: space-between; /* Aligns name and price to opposite ends */
+    align-items: center; /* Center vertically */
+}
+
+.item-name {
+    font-weight: bold;
+}
+
+.item-price {
+    color: #f39c12; /* Highlight price */
+}
+
+/* Quantity controls styles */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Increased space between controls */
+}
+
+.quantity-input {
+    width: 60px; /* Adjusted width for better visibility */
+    text-align: center;
+    background-color: #2c2c2c; /* Consistent dark background */
+    border: 1px solid #555; /* Border for input */
+    border-radius: 4px; /* Rounded corners */
+    color: #e0e0e0; /* Light color for text */
+    padding: 5px; /* Padding for input */
+    transition: background-color 0.3s; /* On-load transition */
+}
+
+.decrement-btn, .increment-btn, .update-btn, .checkout-btn {
+    background-color: #444; /* Dark button background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 8px 10px; /* Increased padding for better button size */
+    
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+}
+.update-btn{
+    margin-top: 5px;
+}
+.decrement-btn:hover, .increment-btn:hover, .update-btn:hover, .checkout-btn:hover {
+    background-color: #555; /* Slightly lighter on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Total amount styles */
+.total-amount {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Checkout form styles */
+.checkout-form {
+    margin-top: 20px; /* Space above form */
+}
+
+.special-instructions {
+    margin-bottom: 15px;
+}
+
+.special-input {
+    width: 100%; /* Full width */
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #555; /* Border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #2c2c2c; /* Consistent dark background */
+    color: #e0e0e0; /* Light color for text */
+}
+
+/* Empty cart message styles */
+.empty-cart-message {
+    text-align: center;
+    margin-top: 20px; /* Space above message */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .cart-container {
+        padding: 15px; /* Reduce padding on smaller screens */
+    }
+
+    .cart-title {
+        font-size: 1.5em; /* Smaller title font size */
+    }
+}
+
+    </style>
 </head>
 
 <body>
-    <% if (order) { %>
-        <h2>Your Cart</h2>
-
-        <!-- Display order person details -->
-        <div>
-            <h3>Order Details</h3>
-            <p><strong>Name:</strong>
-                <%= orderPerson.name %>
-            </p>
-            <p><strong>Email:</strong>
-                <%= orderPerson.email %>
-            </p>
-            <p><strong>Contact:</strong>
-                <%= orderPerson.phone %>
-            </p>
-            <p><strong>Address:</strong>
-                <%= orderPerson.address[0] %>
-            </p>
-        </div>
-
-        <!-- Cart Items List with Increment/Decrement -->
-        <ul>
-            <% order.items.forEach(function(item) { %>
-                <li>
-                    <strong>
-                        <%= item.foodItem.name %>
-                    </strong> - Price: <%= item.foodItem.price * item.quantity %> Rs
-                        <form action="/user/cart/update" method="POST" style="display: inline;">
-                            <div style="display: flex; align-items: center;">
-                                <button type="button" onclick="decrementQuantity('<%= item._id %>')">-</button>
-                                <input type="number" id="quantity-<%= item._id %>" name="quantity"
-                                    value="<%= item.quantity %>" min="0" style="width: 40px; text-align: center">
-                                <button type="button" onclick="incrementQuantity('<%= item._id %>')">+</button>
-                            </div>
-                            <input type="hidden" name="itemId" value="<%= item._id %>">
-                            <button type="submit">Update</button>
-                        </form>
-                </li>
-                <% }) %>
+    <nav class="navbar">
+        <div class="logo">Catering Craft</div>
+        <ul class="nav-links">
+            <li><a href="/user/home">Home</a></li>
+            <li><a href="/user/order">Order</a></li>
+            <li><a href="/user/thali/history">Thali-orders</a></li>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="/user/orderhistory">Order-History</a></li>
+            <li><a href="/user/suggestorder">Suggest me Order</a></li>
         </ul>
+    </nav>
+    
+    <% if (order && order.status === 'pending') { %>
+        <div class="cart-container">
+            <h2 class="cart-title">Your Cart</h2>
 
-        <!-- Total and Checkout Form -->
-        <h3>Total: <%= order.totalBill %> Rs</h3>
-        <form id="checkout-form" action="/user/cart/checkout" method="POST">
-            <div>
-                <label for="specialInstructions">Special Preferences:</label>
-                <input type="text" id="specialInstructions" name="specialInstructions"
-                    value="<%= order.specialInstructions || 'none' %>"
-                    placeholder="Any special requests or preferences">
+            <!-- Display order person details -->
+            <div class="order-details">
+                <h3>Order Details</h3>
+                <p><strong>Name:</strong> <%= orderPerson.name %></p>
+                <p><strong>Email:</strong> <%= orderPerson.email %></p>
+                <p><strong>Contact:</strong> <%= orderPerson.phone %></p>
+                <p><strong>Address:</strong> <%= orderPerson.address[0] %></p>
             </div>
 
-            <!-- Checkout Button -->
-            <button type="submit">Checkout</button>
-        </form>
-        <% } else { %>
-            <p>
-                <%= message %>
-            </p>
-            <% } %>
+            <!-- Cart Items List with Increment/Decrement -->
+            <ul class="cart-items">
+                <% order.items.forEach(function(item) { %>
+                    <li class="cart-item">
+                        <strong class="item-name"><%= item.foodItem.name %></strong>---------<span class="item-price"><%= item.foodItem.price * item.quantity %> Rs</span>
+                        <form action="/user/cart/update" method="POST" class="update-form" style="display: inline;">
+                            <div class="quantity-controls" style="display: flex; align-items: center;">
+                                <button type="button" class="decrement-btn" onclick="decrementQuantity('<%= item._id %>')">-</button>
+                                <input type="number" id="quantity-<%= item._id %>" name="quantity"
+                                    value="<%= item.quantity %>" min="0" class="quantity-input" style="width: 40px; text-align: center">
+                                <button type="button" class="increment-btn" onclick="incrementQuantity('<%= item._id %>')">+</button>
+                            </div>
+                            <input type="hidden" name="itemId" value="<%= item._id %>">
+                            <button type="submit" class="update-btn">Update</button>
+                        </form>
+                    </li>
+                <% }) %>
+            </ul>
 
+            <!-- Total and Checkout Form -->
+            <h3 class="total-amount">Total: <%= order.totalBill %> Rs</h3>
+            <form id="checkout-form" action="/user/cart/checkout" method="POST" class="checkout-form">
+                <div class="special-instructions">
+                    <label for="specialInstructions">Special Preferences:</label>
+                    <input type="text" id="specialInstructions" name="specialInstructions"
+                        value="<%= order.specialInstructions || 'none' %>"
+                        placeholder="Any special requests or preferences" class="special-input">
+                </div>
 
-            <script>
-                function incrementQuantity(itemId) {
-                    const quantityInput = document.getElementById(`quantity-${itemId}`);
-                    quantityInput.value = parseInt(quantityInput.value) + 1;
-                }
-            
-                function decrementQuantity(itemId) {
-                    const quantityInput = document.getElementById(`quantity-${itemId}`);
-                    if (parseInt(quantityInput.value) > 0) {
-                        quantityInput.value = parseInt(quantityInput.value) - 1;
-                    }
-                }
-            </script>
+                <!-- Checkout Button -->
+                <button type="submit" class="checkout-btn">Checkout</button>
+            </form>
+        </div>
+    <% } else { %>
+        <p class="empty-cart-message" style="text-align: center; color: #ffffff; background-color: #333; padding: 15px; border-radius: 8px; font-size: 18px; margin: 10% auto; max-width: 400px;">
+            Your cart is empty or the order status is not pending. 
+            <a href="/user/order" style="color: #83ffff; text-decoration: none; transition: color 0.3s ease; ">Go to Order Page</a>
+        </p>
+        
+    <% } %>
+
+    <script>
+        function incrementQuantity(itemId) {
+            const quantityInput = document.getElementById(`quantity-${itemId}`);
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decrementQuantity(itemId) {
+            const quantityInput = document.getElementById(`quantity-${itemId}`);
+            if (parseInt(quantityInput.value) > 0) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+    const cartContainer = document.querySelector('.cart-container');
+    cartContainer.style.opacity = 1; // Set opacity to 1 to fade in
+    cartContainer.style.transform = 'translateY(0)'; // Move to original position
+});
+    </script>
 </body>
+
 
 </html>

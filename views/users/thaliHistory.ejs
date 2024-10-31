@@ -3,8 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <title>Thali Order History</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Include your CSS file -->
+    <style>
+        body {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 1), rgba(0, 0, 0, 1));
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s ease;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards; /* Onload transition */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #000000, #232323);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.5s ease;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin-right: 20px;
+        }
+
+        .nav-links a:hover {
+            color: #383838; /* A nice highlight color on hover */
+        }
+        .logo {
+    font-size: 35px; /* Logo font size */
+    color: #ffffff; /* White color for logo */
+    font-weight: bold; /* Logo weight */
+    margin-left: 5%;
+}
+        h1, h2 {
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .order-bill {
+            padding: 10px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .order-bill:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        hr {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #393939;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #000e1b;
+        }
+        .bill-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="logo">Catering Craft</div>
+        <ul class="nav-links">
+            <li><a href="/user/home">Home</a></li>
+            <li><a href="/user/order">Order</a></li>
+            <li><a href="/user/cart">Food Cart</a></li>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="/user/orderhistory">Order-History</a></li>
+            <li><a href="/user/suggestorder">Suggest me Order</a></li>
+        </ul>
+    </nav>
+    
     <h1>Thali Order History</h1>
 
     <!-- Display user details -->
@@ -21,12 +144,23 @@
     <% if (thaliOrders.length > 0) { %>
         <ul>
             <% thaliOrders.forEach(order => { %>
-                <li>
-                    <h3><%= order.thaliId.name %></h3>
-                    <p>Quantity: <%= order.quantity %></p>
-                    <p>Total Price: Rs. <%= order.total %></p>
-                    <p>Order Date: <%= order.createdAt.toLocaleDateString() %></p>
-                    <p>Order Type: <%= order.isTiffin ? 'Tiffin' : 'Regular Thali' %></p>
+                <li class="order-bill">
+                    <div class="bill-header">
+                        <span>Thali: <%= order.thaliId.name %></span>
+                        <span>Quantity: <%= order.quantity %></span>
+                    </div>
+                    <div class="bill-item">
+                        <span>Total Price:</span>
+                        <span>Rs. <%= order.total %></span>
+                    </div>
+                    <div class="bill-item">
+                        <span>Order Date:</span>
+                        <span><%= order.createdAt.toLocaleDateString() %></span>
+                    </div>
+                    <div class="bill-item">
+                        <span>Order Type:</span>
+                        <span><%= order.isTiffin ? 'Tiffin' : 'Regular Thali' %></span>
+                    </div>
                 </li>
                 <hr>
             <% }) %>

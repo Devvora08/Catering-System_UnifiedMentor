@@ -5,37 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            opacity: 1; /* Start invisible for fade effect */
+        }
+
+        /* Background image styling */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('/static/loginsignuppaper.jpg') center center/cover no-repeat;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Navbar styling */
+        nav {
+            width: 100%;
+            padding: 15px 0;
+            background-color: #39393972;
+            color: #fff;
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            opacity: 0; /* Start invisible for fade effect */
+            animation: fadeIn 1s forwards 0s; /* Fade-in with a delay */
+        }
+
+        /* Form container styling */
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            padding-top: 80px; /* Space for the fixed navbar */
+            padding-left: 8%;
+            opacity: 0; /* Start invisible for fade effect */
+            animation: fadeIn 1s forwards 0.5s; /* Fade-in with a delay */
+        }
+
+        form {
+            max-width: 300px;
+            width: 90%;
+            padding: 20px;
+            background-color: rgba(50, 50, 50, 0.85);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
         .alert {
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-}
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
 
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-}
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
 
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-}
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
 
-.btn {
-    padding: 10px 15px;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-}
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Sign Up</h1>
-
+    <nav>
+        Catering Craft
+    </nav>
+    <div class="form-container">
         <form action="/signup" method="POST">
+            <h1>Sign Up</h1>
             <div>
                 <label for="name">Name:</label>
                 <input type="text" name="name" required>
@@ -57,21 +166,20 @@
                 <input type="text" name="address" required>
             </div>
             <button type="submit">Sign Up</button>
-        </form><br><br>
-        <hr>
-        <br><br>
-        <% if (messages.error && messages.error.length > 0) { %>
-            <div class="alert alert-danger">
-                <%= messages.error %>
-            </div>
-        <% } %>
-
-        <% if (messages.success && messages.success.length > 0) { %>
-            <div class="alert alert-success">
-                <%= messages.success %>
-                <a href="/" class="btn btn-primary">Go to Home</a> <!-- Button to redirect to home -->
-            </div>
-        <% } %>
+        </form>
     </div>
+
+    <% if (messages.error && messages.error.length > 0) { %>
+        <div class="alert alert-danger">
+            <%= messages.error %>
+        </div>
+    <% } %>
+
+    <% if (messages.success && messages.success.length > 0) { %>
+        <div class="alert alert-success">
+            <%= messages.success %>
+            <a href="/" class="btn btn-primary">Go to Home</a> <!-- Button to redirect to home -->
+        </div>
+    <% } %>
 </body>
 </html>

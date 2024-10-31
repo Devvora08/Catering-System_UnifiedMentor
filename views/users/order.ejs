@@ -4,38 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order | FoodItems</title>
+    <style>
+body {
+    background-color: #1a1a1a;
+    color: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+
+}
+
+h1.menu-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Navbar Styles */
+.navbar {
+            background: linear-gradient(135deg, #000000, #232323);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.5s ease;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin-right: 30px;
+        }
+
+        .nav-links a:hover {
+            color: #383838; /* A nice highlight color on hover */
+        }
+        .logo {
+    font-size: 35px; /* Logo font size */
+    color: #ffffff; /* White color for logo */
+    font-weight: bold; /* Logo weight */
+    margin-left: 5%;
+}
+
+/* Category Links */
+.category-links {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.category-links a {
+    margin: 0 10px;
+    color: #f1f1f1;
+    text-decoration: none;
+    transition: color 0.5s ease
+}
+
+.category-links a:hover {
+    color: #a5a5a5;
+    text-decoration: none;
+}
+
+/* Food Items Styles */
+.food-items {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.food-item {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    margin: 15px;
+    padding: 15px;
+    width: 250px; /* Set a fixed width for alignment */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.food-item:hover {
+    transform: scale(1.05);
+}
+
+.food-image {
+    max-width: 100%;
+    height: 150px; /* Set a fixed height for uniformity */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    border-radius: 5px;
+}
+
+/* Food Item Details */
+.food-name {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.food-description {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.food-price {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Order Form Styles */
+.order-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all elements within the form */
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the quantity controls */
+    margin-bottom: 10px;
+}
+
+.decrement-button,
+.increment-button {
+    background-color: #444;
+    color: #f2f2f2;
+    border: none;
+    border-radius: 15%; /* Make buttons round */
+    width: 30px; /* Set width for round shape */
+    height: 30px; /* Set height for round shape */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.5em; /* Increase font size for better visibility */
+    line-height: 30px; /* Center the text vertically */
+}
+
+.decrement-button:hover,
+.increment-button:hover {
+    background-color: #ffcc00;
+    color: #1a1a1a;
+}
+
+.quantity-input {
+    width: 40px; /* Fixed width for consistency */
+    text-align: center;
+    margin: 0 5px;
+    background-color: #333;
+    color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Add to Cart Button Styles */
+.add-to-cart-button {
+    background-color: #444;
+    color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 10px; /* Add space above the button */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+    background-color: #ffcc00;
+    color: #1a1a1a;
+}
+
+    </style>
 </head>
 <body>
-    <h1><%= category %> Menu</h1>
-    <ul>
+    <nav class="navbar">
+        <div class="logo">Catering Craft</div>
+        <ul class="nav-links">
+            <li><a href="/user/home">Home</a></li>
+            <li><a href="/user/order">Order</a></li>
+            <li><a href="/user/cart">Food Cart</a></li>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="/user/orderhistory">Order-History</a></li>
+            <li><a href="/user/suggestorder">Suggest me Order</a></li>
+        </ul>
+    </nav>
+
+    <div class="category-links">
+        <a href="/user/order?category=Appetizer">Appetizer</a>
+        <a href="/user/order?category=Soup">Soup</a>
+        <a href="/user/order?category=Main Course">Main Course</a>
+        <a href="/user/order?category=Side Dish">Side Dish</a>
+        <a href="/user/order?category=Dessert">Dessert</a>
+        <a href="/user/cart">Go to Cart</a>
+    </div>
+
+    <h1 class="menu-title"><%= category %> Menu</h1>
+    
+    <ul class="food-items">
         <% foodItems.forEach(item => { %>
-            <li>
-                <h3><%= item.name %></h3>
-                <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
-                <p><%= item.description %></p>
-                <p>Price: <%= item.price %> Rs</p>
+            <li class="food-item">
+                <h3 class="food-name"><%= item.name %></h3>
+                <img class="food-image" src="<%= item.imageUrl %>" alt="<%= item.name %>">
+                <p class="food-description"><%= item.description %></p>
+                <p class="food-price">Price: <%= item.price %> Rs</p>
                 
-                <form action="/user/order" method="POST" style="display: inline;">
-                    <div style="display: flex; align-items: center;">
-                        <button type="button" onclick="decrementQuantity('<%= item._id %>')">-</button>
-                        <input type="number" id="quantity-<%= item._id %>" name="quantity" value="1" min="1" style="width: 40px; text-align: center;" readonly>
-                        <button type="button" onclick="incrementQuantity('<%= item._id %>')">+</button>
+                <form action="/user/order" method="POST" class="order-form" style="display: inline;">
+                    <div class="quantity-controls" style="display: flex; align-items: center;">
+                        <button type="button" class="decrement-button" onclick="decrementQuantity('<%= item._id %>')">-</button>
+                        <input type="number" id="quantity-<%= item._id %>" name="quantity" value="1" min="1" class="quantity-input" readonly>
+                        <button type="button" class="increment-button" onclick="incrementQuantity('<%= item._id %>')">+</button>
                     </div>
                     <input type="hidden" name="itemId" value="<%= item._id %>">
-                    <button type="submit">Add to Cart</button>
+                    <button type="submit" class="add-to-cart-button">Add to Cart</button>
                 </form>
             </li>
         <% }) %>
     </ul>
-
-<div>
-    <a href="/user/order?category=Appetizer">Appetizer</a>
-    <a href="/user/order?category=Soup">Soup</a>
-    <a href="/user/order?category=Main Course">Main Course</a>
-    <a href="/user/order?category=Side Dish">Side Dish</a>
-    <a href="/user/order?category=Dessert">Dessert</a>
-    <a href="/user/cart">Go to Cart</a>
-</div>
 
 <script>
     function incrementQuantity(itemId) {
@@ -51,4 +243,5 @@
     }
 </script>
 </body>
+
 </html>

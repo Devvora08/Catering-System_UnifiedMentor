@@ -7,37 +7,80 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
+            background-color: #000000; /* Solid black background */
+            color: white; /* White text */
+            opacity: 0; /* Start invisible */
+            transition: background-color 0.5s ease, opacity 0.5s ease; /* Transition effect */
         }
         h1 {
             text-align: center;
+            font-weight: bold; /* Bold title */
+            margin-bottom: 20px; /* Space below title */
         }
-        .bill-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.98); /* Black with slight transparency */
             border-radius: 8px;
             padding: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .navbar h1 {
+            margin: 0;
+            color: #00bcd4; /* Ocean Blue for the title */
+        }
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar ul li {
+            margin-left: 15px;
+        }
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold; /* Bold links */
+            padding: 5px 10px; /* Padding around links */
+            border-radius: 4px; /* Rounded corners */
+            transition: color 0.3s; /* Link transition */
+        }
+        .navbar ul li a:hover {
+            color: rgba(0, 188, 212, 0.2); /* Light blue on hover */
+        }
+        .bill-container {
+            max-width: 400px; /* Set a max width for bills */
+            margin: 20px; 
+            background-color: rgba(0, 0, 0, 0.9); /* Black with slight blue tint */
+            border-radius: 8px;
+            padding: 20px; /* Inner padding for the container */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Softer shadow */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s; /* Transition effect for hover */
+        }
+        .bill-container:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
         }
         .bill-header {
             text-align: left;
             margin-bottom: 15px;
+            border-bottom: 2px solid #005b73; /* Bottom border for header */
+            padding-bottom: 10px; /* Space below header */
         }
         .bill-header h2 {
             margin: 5px 0;
-            font-size: 1.2em;
-            color: #333;
+            font-size: 1.5em; /* Increased font size */
+            color: #fff; /* White color for headers */
+            font-weight: bold; /* Bold header */
         }
         .bill-info {
             display: flex;
             justify-content: space-between;
             font-size: 0.9em;
-            color: #666;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 8px;
+            color: #ccc; /* Lighter color for user info */
             margin-bottom: 15px;
         }
         .bill-info .user-details {
@@ -48,15 +91,17 @@
             list-style-type: none;
             padding: 0;
             font-size: 1em;
+            margin: 10px 0; /* Space above and below list */
         }
         .itemized-list li {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #005b73; /* Partition line between items */
+            color: #fff; /* White color for list items */
         }
         .itemized-list li:last-child {
-            border-bottom: none;
+            border-bottom: none; /* No border for last item */
         }
         .total-section {
             font-weight: bold;
@@ -65,47 +110,72 @@
             font-size: 1.1em;
             padding: 12px 0;
             margin-top: 10px;
-            border-top: 2px solid #ddd;
+            border-top: 2px solid #005b73; /* Top border for total section */
+            color: #fff; /* White color for total section */
+        }
+        .bill-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping of bills */
+            justify-content: center; /* Center bills on the page */
         }
     </style>
+    <script>
+        // JavaScript to handle the onload transition
+        window.onload = function() {
+            document.body.style.opacity = 1; // Fade in effect
+        };
+    </script>
 </head>
 <body>
+    <div class="navbar">
+        <h1>Catering Craft</h1>
+        <ul>
+            <li><a href="/admin/ordermanage">Order Management</a></li>
+            <li><a href="/admin/thaliorders">Thali-Orders</a></li>
+            <li><a href="/admin/message">Messages</a></li>
+            <li><a href="/admin/team">Team</a></li>
+            <li><a href="/admin/seeMessages">View Messages</a></li>
+            <li><a href="/admin/home">Home</a></li>
+        </ul>
+    </div>
     <h1>User Bills</h1>
+    
+    <div class="bill-wrapper">
+        <% userBills.forEach(bill => { %>
+            <div class="bill-container">
+                <!-- Bill Header -->
+                <div class="bill-header">
+                    <h2>User Bill</h2>
+                </div>
 
-    <% userBills.forEach(bill => { %>
-        <div class="bill-container">
-            <!-- Bill Header -->
-            <div class="bill-header">
-                <h2>User Bill</h2>
-            </div>
+                <!-- User Info -->
+                <div class="bill-info">
+                    <div class="user-details">
+                        <div>User: <strong><%= bill.user.name %></strong></div>
+                        <div>Email: <%= bill.user.email %></div>
+                        <div>Phone: <%= bill.user.phone %></div>
+                    </div>
+                </div>
 
-            <!-- User Info -->
-            <div class="bill-info">
-                <div class="user-details">
-                    <div>User: <strong><%= bill.user.name %></strong></div>
-                    <div>Email: <%= bill.user.email %></div>
-                    <div>Phone: <%= bill.user.phone %></div>
+                <!-- Itemized Bill -->
+                <ul class="itemized-list">
+                    <li>
+                        <span>Regular Orders Total</span>
+                        <span>₹<%= bill.orderTotal.toFixed(2) %></span>
+                    </li>
+                    <li>
+                        <span>Thali Orders Total</span>
+                        <span>₹<%= bill.thaliOrderTotal.toFixed(2) %></span>
+                    </li>
+                </ul>
+
+                <!-- Total Amount Due -->
+                <div class="total-section">
+                    <span>Total Amount Due</span>
+                    <span>₹<%= bill.totalBill.toFixed(2) %></span>
                 </div>
             </div>
-
-            <!-- Itemized Bill -->
-            <ul class="itemized-list">
-                <li>
-                    <span>Regular Orders Total</span>
-                    <span>₹<%= bill.orderTotal.toFixed(2) %></span>
-                </li>
-                <li>
-                    <span>Thali Orders Total</span>
-                    <span>₹<%= bill.thaliOrderTotal.toFixed(2) %></span>
-                </li>
-            </ul>
-
-            <!-- Total Amount Due -->
-            <div class="total-section">
-                <span>Total Amount Due</span>
-                <span>₹<%= bill.totalBill.toFixed(2) %></span>
-            </div>
-        </div>
-    <% }) %>
+        <% }) %>
+    </div>
 </body>
 </html>

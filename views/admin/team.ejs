@@ -6,51 +6,133 @@
     <title>Team Members</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #333333, #0a0a0a); /* Radial gradient from a lighter dark gray to near black */
+    color: white; /* White text for better visibility */
+    margin: 0;
+}
+
+        .navbar {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #33333351; /* Dark background for navbar */
+            border-radius: 8px; /* Rounded corners */
+            display: flex;
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Space between items */
+        }
+        .navbar h1 {
+            margin-left: 5%;
+            font-size: 2em;
+        }
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Flex layout for navbar items */
+        }
+        .navbar ul li {
+            margin-right: 15px;
+        }
+        .navbar ul li a {
+            color: #ffffff; /* Lighter greenish color for links */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .navbar ul li a:hover {
+            color: rgb(0, 78, 8); /* Change color on hover */
         }
         .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center boxes */
+            gap: 15px; /* Space between boxes */
             margin: 20px 0;
         }
         .team-member {
-            border: 1px solid #ddd;
+            border: 1px solid #444; /* Darker border */
             border-radius: 8px;
             padding: 15px;
-            margin-bottom: 10px;
-            background-color: #f9f9f9;
+            background-color: #1a1a1a; /* Darker box background */
+            transition: transform 0.3s, box-shadow 0.3s; /* Transition for hover effects */
+            opacity: 0; /* Start hidden for animation */
+            transform: translateY(20px); /* Start slightly below */
+            animation: fadeIn 0.5s forwards; /* Onload animation */
+            width: 300px; /* Fixed width for boxes */
+            text-align: center; /* Center text */
         }
         .team-member h3 {
             margin: 0;
+            font-weight: bold; /* Bold for better visibility */
+        }
+        .team-member hr {
+            margin: 10px 0; /* Space around the line */
+            border: none; /* Remove default border */
+            border-top: 1px solid #444; /* Custom line color */
         }
         .team-member p {
             margin: 5px 0;
+        }
+        .team-member:hover {
+            transform: translateY(-5px); /* Move up on hover */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
         }
         .back-button {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 15px;
-            background-color: #007BFF;
+            background-color: #393939; /* Blue color */
             color: white;
             border: none;
             border-radius: 5px;
             text-decoration: none;
+            transition: background-color 0.3s;
+            font-weight: bold; /* Bold text */
+            text-align: center; /* Center text */
         }
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #001933; /* Darker blue on hover */
+        }
+
+        /* Keyframes for box animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Team Members</h1>
+    <div class="navbar">
+        <h1>Catering Craft</h1>
+        <ul>
+            <li><a href="/admin/thaliorders">Thali-Orders</a></li>
+            <li><a href="/admin/bills">Bills</a></li>
+            <li><a href="/admin/message">Messages</a></li>
+            <li><a href="/admin/team">Team</a></li>
+            <li><a href="/admin/seeMessages">View Messages</a></li>
+            <li><a href="/admin/home">Home</a></li>
+        </ul>
+    </div> 
+    <h1 style="font-family: 'Georgia', serif; text-align: center; margin: 70px 20px; font-size: 2.5em; font-weight: bold; color: white;">Team Members</h1>
     <div class="team-container">
-        <% teamMembers.forEach(member => { %>
-            <div class="team-member">
+        <% teamMembers.forEach((member, index) => { %>
+            <div class="team-member" style="animation-delay: <%= index * 0.1 %>s;"> <!-- Staggered delay for animation -->
                 <h3><%= member.name %></h3>
+                <hr>
                 <p><strong>Email:</strong> <%= member.email %></p>
                 <p><strong>Phone:</strong> <%= member.phone %></p>
             </div>
         <% }) %>
     </div>
 
-    <a href="/admin/home" class="back-button">Back to Admin Dashboard</a>
+    <div style="text-align: center;">
+        <a href="/admin/home" class="back-button">Back to Admin Dashboard</a>
+    </div>
 </body>
 </html>

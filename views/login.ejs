@@ -4,22 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member | Login</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body, html {
+            height: 100%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            opacity: 1; /* Start invisible for fade effect */
+        }
+
+        /* Background image styling */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('/static/loginsignuppaper.jpg') center center/cover no-repeat;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Navbar styling */
+        nav {
+            width: 100%;
+            padding: 15px 0;
+            background-color: #7c7c7c56;
+            color: #fff;
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            opacity: 0; /* Start invisible for fade effect */
+            animation: fadeIn 1s forwards 0s; /* Fade-in with a delay */
+        }
+
+        /* Form container styling */
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            padding-top: 80px; /* Space for the fixed navbar */
+            padding-left: 8%;
+            opacity: 0; /* Start invisible for fade effect */
+            animation: fadeIn 1s forwards 0.5s; /* Fade-in with a delay */
+        }
+
+        form {
+            max-width: 300px;
+            width: 90%;
+            padding: 20px;
+            background-color: rgba(50, 50, 50, 0.85);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #fbff00;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #818100;
+            color: rgb(255, 255, 255);
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #d0ffff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: grey;
+        }
+    </style>
 </head>
 <body>
-    <form action="/login" method="POST">
-        <h2>Login</h2>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required placeholder="Enter your email" />
-        </div>
-    
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required placeholder="Enter your password" />
-        </div>
-    
-        <button type="submit">Login</button>
-        <p>Don't have an account? <a href="/signup">Sign up here</a></p>
-    </form>
+    <nav>
+        Catering Craft
+    </nav>
+    <div class="form-container">
+        <form action="/login" method="POST">
+            <h2>Login</h2>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email" />
+            </div>
+        
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password" />
+            </div>
+        
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        </form>
+    </div>
 </body>
 </html>
